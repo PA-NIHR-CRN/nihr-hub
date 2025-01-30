@@ -1,5 +1,6 @@
 using Nihr.Hub.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Repositories;
+using Nihr.Hub.Infrastructure.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +28,15 @@ builder.Services.AddAuthentication(options =>
     });
 
 builder.AddNihrConfiguration();
+
+builder.Services.AddOptions<AupSettings>()
+    .Bind(builder.Configuration.GetSection("AUP"))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptions<HubApplicationSettings>()
+    .Bind(builder.Configuration.GetSection("Applications"))
+    .ValidateDataAnnotations();
+
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
 var app = builder.Build();

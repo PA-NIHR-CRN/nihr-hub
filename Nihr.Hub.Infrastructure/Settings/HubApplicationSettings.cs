@@ -7,6 +7,7 @@ public class HubApplicationSettings
 
 public class HubApplication
 {
+    public required int Id { get; set; }
     public required string Name { get; set; }
     public required string IconImage { get; set; }
     public required string Url { get; set; }
