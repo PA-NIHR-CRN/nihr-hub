@@ -1,0 +1,55 @@
+﻿@model UserModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity is { IsAuthenticated: true })
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l">Welcome to the NIHR Hub, <b>@Model.GivenName</b>.</h1>
+        </div>
+        <div class="govuk-grid-column-full">
+            <div class="hero-container">
+                <a class="news-link govuk-link" href="#">News, views and stories</a>
+                <div class="govuk-form-group govuk-!-margin-bottom-0">
+                    <h1 class="govuk-label-wrapper">
+                        <label class="govuk-label govuk-visually-hidden" for="nihr-search-input">
+                            Search information across the NIHR
+                        </label>
+                    </h1>
+                    <div class="search-wrapper">
+                        <form target="_blank" action="https://cloudsearch.google.com/cloudsearch">
+                            <input placeholder="Search NIHR" class="govuk-input govuk-!-margin-bottom-0"
+                                   id="nihr-search-input"
+                                   name="q" type="text">
+                            <button type="submit" value="Update results" class="search-button">
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div id="favourites-list">
+                
+            </div>
+        </div>
+    </div>
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div id="all-applications">
+
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts
+{
+    <script src="lib/sortablejs/Sortable.min.js"></script>
+    <script src="js/favourite-apps.js"></script>
+}

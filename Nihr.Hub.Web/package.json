@@ -1,0 +1,15 @@
+{
+  "name": "nihr.hub.web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "govuk-frontend": "^5.8.0",
+    "sortablejs": "^1.15.6"
+  }
+}

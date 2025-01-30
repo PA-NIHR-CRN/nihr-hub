@@ -1,0 +1,50 @@
+﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+.govuk-footer {
+    background-color: rgba(var(--nihr-blue));
+}
+
+.govuk-footer__link {
+    color: white;
+}
+
+.govuk-footer__meta {
+    align-items: flex-start;
+}
+
+.funded-by-dhsc-logo {
+    display: inline-block;
+    min-width: 125px;
+    padding-top: 112px;
+    text-align: center;
+    white-space: nowrap;
+    max-width: 200px;
+}
+
+.funded-by-dhsc-logo img {
+    max-width: 200px;
+}
+
+header {
+    height: auto;
+    display: block;
+}
+
+header::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.govuk-header__logo img {
+    max-width: 325px;
+}
+
+.authentication-controls {
+    float: right;
+    display: flex;
+    align-items: center; /* Aligns span content to the center vertically */
+    gap: 10px;
+    color: rgba(var(--nihr-blue));
+}
