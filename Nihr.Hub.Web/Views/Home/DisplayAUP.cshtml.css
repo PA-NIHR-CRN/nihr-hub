@@ -1,0 +1,13 @@
+h1 {
+    color: rgba(var(--nihr-blue));
+    font-weight: normal;
+    text-align: center;
+}
+
+.aup-frame {
+    height: 600px;
+}
+
+.govuk-button {
+    float: right;
+}

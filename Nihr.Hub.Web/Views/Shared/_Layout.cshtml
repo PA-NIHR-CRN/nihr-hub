@@ -1,5 +1,4 @@
-﻿@model UserModel
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -22,7 +21,6 @@
     <div class="authentication-controls">
         @if (User.Identity is { IsAuthenticated: true })
         {
-            <span class="govuk-!-margin-right-3">Signed in as <b>@Model.FullName</b></span>
             <a class="govuk-link govuk-!-margin-right-2" href="https://myaccount.google.com">My Account</a>
             <a href="/sign-out" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
                data-module="govuk-button">
@@ -84,7 +82,8 @@
 </footer>
 
 <script type="module">
-    import { initAll } from '/lib/govuk/govuk-frontend.min.js'
+    import {initAll} from '/lib/govuk/govuk-frontend.min.js'
+
     initAll()
 </script>
 <script src="~/js/site.js" asp-append-version="true"></script>

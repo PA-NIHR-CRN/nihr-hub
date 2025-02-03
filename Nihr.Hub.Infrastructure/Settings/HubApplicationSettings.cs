@@ -1,14 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace Nihr.Hub.Infrastructure.Settings;
 
 public class HubApplicationSettings
 {
-    public required IList<HubApplication> Applications { get; set; }
+    [Required] public required IList<HubApplication> Applications { get; set; }
 }
 
 public class HubApplication
 {
-    public required int Id { get; set; }
-    public required string Name { get; set; }
-    public required string IconImage { get; set; }
-    public required string Url { get; set; }
+    [Required] public required int Id { get; set; }
+    [Required] public required string Name { get; set; }
+    [Required] public required string ImageName { get; set; }
+    [Required] public required string Url { get; set; }
 }

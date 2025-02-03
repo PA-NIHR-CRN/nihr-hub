@@ -1,16 +1,24 @@
+using System.Text.Json;
 using Amazon.DynamoDBv2.DataModel;
 
 namespace Nihr.Hub.Domain.Entities;
 
-[DynamoDBTable("nihrd-dynamodb-nihr-hub-dev")]
 public class User
 {
-    [DynamoDBHashKey] // Primary Key
-    public string Email { get; set; } = string.Empty;
+    [DynamoDBHashKey] public string Email { get; set; } = string.Empty; // PK in Dynamo
 
     [DynamoDBProperty] public string AupAcceptedVersion { get; set; } = string.Empty;
 
-    [DynamoDBProperty] public DateTime AupAcceptedDate { get; set; }
+    [DynamoDBProperty] public string AupAcceptedDate { get; set; } = string.Empty;
 
-    [DynamoDBProperty] public List<int> Favourites { get; set; } = new();
+    [DynamoDBProperty]
+    public string FavouritesJson
+    {
+        get => JsonSerializer.Serialize(Favourites);
+        set => Favourites = JsonSerializer.Deserialize<List<int>>(value) ?? [];
+    }
+
+    [DynamoDBIgnore] public List<int> Favourites { get; set; } = [];
+
+    [DynamoDBProperty] public string LastUpdatedDate { get; set; } = string.Empty;
 }

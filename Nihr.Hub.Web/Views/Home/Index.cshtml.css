@@ -4,6 +4,11 @@ h1 {
     text-align: center;
 }
 
+h2 {
+    color: rgba(var(--nihr-blue));
+    font-weight: 700;
+}
+
 .news-link {
     text-decoration: none;
     font-weight: 700;
@@ -65,6 +70,43 @@ h1 {
     background-color: #fd0;
 }
 
-body:not(.js-enabled) .list-one {
+body:not(.js-enabled) #favourites-caption {
     display: none;
+}
+
+.card {
+    box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15);
+    border: 0.0625rem solid rgba(0, 0, 0, 0);
+    min-height: 100px;
+}
+
+.icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* Ensures vertical alignment */
+    row-gap: 55px;
+    column-gap: 40px;
+    padding: 20px;
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Adjust label color */
+    font-size: 14px;
+    width: 80px; /* Ensures consistent width per icon block */
+    text-align: center;
+}
+
+.icon img {
+    height: 50px;
+    width: auto;
+    margin-bottom: 5px; /* Space between icon and label */
+}
+
+.icon-label {
+    text-align: center;
 }

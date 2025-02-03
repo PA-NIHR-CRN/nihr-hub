@@ -17,9 +17,11 @@ builder.Services.AddAuthentication(options =>
     .AddCookie("Cookies") // Use cookies for session tracking
     .AddGoogle("Google", options =>
     {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ?? throw new InvalidOperationException("ClientId is missing");
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ?? throw new InvalidOperationException("ClientSecret is missing");
-        
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
+                           throw new InvalidOperationException("ClientId is missing");
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ??
+                               throw new InvalidOperationException("ClientSecret is missing");
+
         options.Events.OnRedirectToAuthorizationEndpoint = context =>
         {
             context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
@@ -27,6 +29,7 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+builder.ConfigureNihrLogging();
 builder.AddNihrConfiguration();
 
 builder.Services.AddOptions<AupSettings>()
@@ -34,8 +37,13 @@ builder.Services.AddOptions<AupSettings>()
     .ValidateDataAnnotations();
 
 builder.Services.AddOptions<HubApplicationSettings>()
-    .Bind(builder.Configuration.GetSection("Applications"))
+    .Bind(builder.Configuration.GetSection("HubApplications"))
     .ValidateDataAnnotations();
+
+builder.Services.AddOptions<DynamoDbSettings>()
+    .Bind(builder.Configuration.GetSection("DynamoDb"))
+    .ValidateDataAnnotations();
+
 
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 

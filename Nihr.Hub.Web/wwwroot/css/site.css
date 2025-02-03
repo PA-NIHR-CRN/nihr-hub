@@ -11,6 +11,6 @@ body {
     margin: 0;
 }
 
-.govuk-link {
-    font-family: inherit;
+.govuk-link, .govuk-button, .govuk-footer__link, .govuk-input, .govuk-heading-m, .govuk-caption-m {
+    font-family: "Lato", sans-serif !important;
 }

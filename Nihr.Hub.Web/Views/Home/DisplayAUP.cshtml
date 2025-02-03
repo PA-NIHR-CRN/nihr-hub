@@ -1,0 +1,24 @@
+﻿@model AupModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity is { IsAuthenticated: true })
+{
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h1 class="govuk-heading-l govuk-!-margin-bottom-0">NIHR Acceptable Use Policy</h1>
+            <iframe class="aup-frame"
+                    src="@Model.Url"
+                    width="100%"
+                    style="border: none;"
+                    sandbox="allow-scripts allow-same-origin"
+                    referrerpolicy="no-referrer">
+            </iframe>
+            <form asp-action="AcceptAup" method="post">
+                <button type="submit" class="govuk-!-margin-bottom-0 govuk-!-margin-top-3 govuk-button">Accept</button>
+            </form>
+        </div>
+    </div>
+}

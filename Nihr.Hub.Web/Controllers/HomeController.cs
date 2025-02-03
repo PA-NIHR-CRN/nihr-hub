@@ -3,15 +3,24 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Nihr.Hub.Domain.Entities;
 using Nihr.Hub.Infrastructure.Interfaces;
+using Nihr.Hub.Infrastructure.Settings;
+using Nihr.Hub.Web.Extensions;
 using Nihr.Hub.Web.Models;
 
 namespace Nihr.Hub.Web.Controllers;
 
-public class HomeController(ILogger<HomeController> logger, IUserRepository userRepository) : Controller
+public class HomeController(
+    ILogger<HomeController> logger,
+    IUserRepository userRepository,
+    IOptions<AupSettings> aupOptions,
+    IOptions<HubApplicationSettings> hubApplicationOptions) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
-    private readonly IUserRepository _userRepository = userRepository;
+
+    private static readonly IList<int> DefaultApps = new List<int> { 1, 2, 3 };
 
     [Route("sign-in")]
     public IActionResult SignIn()
@@ -33,25 +42,111 @@ public class HomeController(ILogger<HomeController> logger, IUserRepository user
     [Authorize]
     public async Task<IActionResult> Index(CancellationToken cancellationToken)
     {
-        var fullName = User?.FindFirst(ClaimTypes.Name)?.Value;
-        var givenName = User?.FindFirst(ClaimTypes.GivenName)?.Value;
-        var email = User?.FindFirst(ClaimTypes.Email)?.Value;
+        var fullName = User?.GetFullName();
+        var givenName = User?.GetGivenName();
+        var email = User?.GetEmail();
 
         if (string.IsNullOrWhiteSpace((email)))
         {
             throw new InvalidOperationException("User does not have an email address.");
         }
-        
-        var user = await this._userRepository.GetUser(email, cancellationToken);
 
-        return View(new UserModel { FullName = fullName, GivenName = givenName, Email = email });
+        var aupCurrentVersion = aupOptions.Value.CurrentVersion;
+
+        var user = await userRepository.GetUser(email, cancellationToken);
+
+        if (user == null || user.AupAcceptedVersion != aupCurrentVersion)
+        {
+            return RedirectToAction("DisplayAup");
+        }
+
+        List<HubApplication> favouriteApps;
+
+        if (user.Favourites.Count == 0)
+        {
+            favouriteApps = hubApplicationOptions.Value.Applications.Where(app => DefaultApps.Contains(app.Id))
+                .ToList();
+        }
+        else
+        {
+            favouriteApps = hubApplicationOptions.Value.Applications.Where(app => user.Favourites.Contains(app.Id))
+                .OrderBy(app => user.Favourites.IndexOf(app.Id))
+                .ToList();
+        }
+
+        return View(new HomeModel
+        {
+            FullName = fullName, GivenName = givenName, Email = email,
+            AllApplications = hubApplicationOptions.Value.Applications.Where(app => !favouriteApps.Contains(app))
+                .ToList(),
+            Favourites = favouriteApps
+        });
+    }
+
+    [HttpPost]
+    [Authorize]
+    [Route("save-favourites")]
+    public async Task<IActionResult> SaveFavourites([FromBody] FavouritesModel model,
+        CancellationToken cancellationToken)
+    {
+        var email = User?.GetEmail();
+
+        if (string.IsNullOrWhiteSpace((email)))
+        {
+            throw new InvalidOperationException("User does not have an email address.");
+        }
+
+        var user = await userRepository.GetUser(email, cancellationToken);
+
+        user.Favourites = model.FavouriteIds;
+
+        await userRepository.SaveUser(user, cancellationToken);
+
+        return NoContent();
     }
 
     [Authorize]
     [Route("aup")]
-    public async Task<IActionResult> AcceptAUP()
+    [HttpGet]
+    public IActionResult DisplayAup()
     {
-        return this.Ok();
+        var aupCurrentVersion = aupOptions.Value.CurrentVersion;
+        var aupUrl = aupOptions.Value.Url;
+        return this.View(new AupModel { CurrentVersion = aupCurrentVersion, Url = aupUrl });
+    }
+
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AcceptAup(CancellationToken cancellationToken)
+    {
+        var aupCurrentVersion = aupOptions.Value.CurrentVersion;
+        var email = User?.GetEmail();
+
+        if (string.IsNullOrWhiteSpace((email)))
+        {
+            throw new InvalidOperationException("User does not have an email address.");
+        }
+
+        var user = await userRepository.GetUser(email, cancellationToken);
+
+        if (user != null)
+        {
+            user.AupAcceptedDate = DateTimeOffset.Now.ToString("o");
+            user.AupAcceptedVersion = aupCurrentVersion;
+        }
+        else
+        {
+            user = new User
+            {
+                AupAcceptedDate = DateTimeOffset.Now.ToString("o"),
+                AupAcceptedVersion = aupCurrentVersion,
+                Email = email
+            };
+        }
+
+        await userRepository.SaveUser(user, cancellationToken);
+
+        return this.RedirectToAction("Index");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
