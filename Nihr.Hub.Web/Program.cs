@@ -29,6 +29,8 @@ builder.Services.AddAuthentication(options =>
         };
     });
 
+
+builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(builder.Configuration.GetSection("Logging")));
 builder.ConfigureNihrLogging();
 builder.AddNihrConfiguration();
 
@@ -46,6 +48,8 @@ builder.Services.AddOptions<DynamoDbSettings>()
 
 
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
@@ -69,5 +73,6 @@ app.MapControllerRoute(
         pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+app.MapHealthChecks("/api/health");
 
 app.Run();
