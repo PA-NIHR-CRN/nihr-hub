@@ -22,6 +22,13 @@ jobs:
         run: |
           npm run build
 
+      - name: Configure AWS credentials (dev)
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_ID }}
+          aws-secret-access-key: ${{ secrets.NIHR_GITHUB_ACTIONS_IAM_SECRET }}
+          aws-region: ${{ env.AWS_REGION_2 }}
+
   deploy-test:
     needs: [build]
     environment: TEST
