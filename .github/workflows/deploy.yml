@@ -15,14 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - name: Install
-        run: npm ci --no-audit --no-fund
-      - name: Build
-        run: |
-          npm run build
 
-      
+ uses: actions/setup-dotnet@v4
+         with:
+           dotnet-version: '9.0.x'      
 
   deploy-test:
     needs: [build]
