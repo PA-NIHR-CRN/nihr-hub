@@ -11,19 +11,19 @@ env:
 
 jobs:
   build:
-    name: 'Build'
+    name: "Build"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
- uses: actions/setup-dotnet@v4
-         with:
-           dotnet-version: '9.0.x'      
+  uses: actions/setup-dotnet@v4
+  with:
+    dotnet-version: "9.0.x"
 
   deploy-test:
-    needs: [build]
+    needs: [Build]
     environment: TEST
-    name: 'Deploy Test'
+    name: "Deploy Test"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -83,11 +83,11 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
-          
+
   deploy-prod:
     needs: deploy-test
     environment: PROD
-    name: 'Deploy Prod'
+    name: "Deploy Prod"
     runs-on: ubuntu-latest
 
     steps:
@@ -108,7 +108,7 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-    
+
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
@@ -130,7 +130,6 @@ jobs:
         run: |
           sed -i "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" ../Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
 
-          
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         env:
@@ -155,4 +154,3 @@ jobs:
           service: ${{ env.ECS_SERVICE }}
           cluster: ${{ env.ECS_CLUSTER }}
           wait-for-service-stability: true
-
