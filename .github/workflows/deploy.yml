@@ -57,12 +57,12 @@ jobs:
 
       - name: Replace placeholder in task definition
         run: |
-          sed -i "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" ../Nihr.Hub.Infrastructure/.aws/task-definition-test.json
+          sed -i "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" ../../Nihr.Hub.Infrastructure/.aws/task-definition-test.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         env:
-          ECS_TASK_DEFINITION: ../Nihr.Hub.Infrastructure/.aws/task-definition-test.json
+          ECS_TASK_DEFINITION: ../../Nihr.Hub.Infrastructure/.aws/task-definition-test.json
           CONTAINER_NAME: nihrd-ecs-test-nihr-hub-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
@@ -127,12 +127,12 @@ jobs:
 
       - name: Replace placeholder in task definition
         run: |
-          sed -i "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" ../Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
+          sed -i "s/{{ACCOUNT_ID}}/${ACCOUNT_ID}/g" ../../Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
 
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         env:
-          ECS_TASK_DEFINITION: ../Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
+          ECS_TASK_DEFINITION: ../../Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
           CONTAINER_NAME: nihrp-ecs-prod-nihr-hub-container
         uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
