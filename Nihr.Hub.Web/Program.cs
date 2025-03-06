@@ -7,7 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Configuration.AddJsonFile("appsettings.user.json", optional: true, reloadOnChange: true);
+builder.AddNihrConfiguration();
+builder.ConfigureNihrLogging();
 
 builder.Services.AddAuthentication(options =>
     {
@@ -28,11 +29,6 @@ builder.Services.AddAuthentication(options =>
             return Task.CompletedTask;
         };
     });
-
-
-builder.Services.AddLogging(loggingBuilder => loggingBuilder.AddConfiguration(builder.Configuration.GetSection("Logging")));
-builder.ConfigureNihrLogging();
-builder.AddNihrConfiguration();
 
 builder.Services.AddOptions<AupSettings>()
     .Bind(builder.Configuration.GetSection("AUP"))
