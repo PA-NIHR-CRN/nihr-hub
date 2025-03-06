@@ -2,11 +2,11 @@
 USER $APP_UID
 WORKDIR /app
 
-ARG AWS_SECRET_NAME
+ARG AWS_SECRET
 ARG AWS_REGION
 ARG SECRETS_ENABLED
 
-ENV AwsSecretsManagerSettings__SecretName=${AWS_SECRET_NAME}
+ENV AwsSecretsManagerSettings__SecretName=${AWS_SECRET}
 ENV AwsSecretsManagerSettings__Enabled=${SECRETS_ENABLED}
 ENV AwsSecretsManagerSettings__Region=${AWS_REGION}
 ENV ASPNETCORE_Environment=Production
