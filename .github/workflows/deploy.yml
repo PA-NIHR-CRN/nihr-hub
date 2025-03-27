@@ -84,10 +84,10 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
             AWS_REGION=${{ env.AWS_REGION_2 }}
-            AwsSecretsManagerSettings__SecretName: ${{ secrets.AWS_SECRET_NAME }}
-            AwsSecretsManagerSettings__Enabled: ${{ vars.SECRETS_ENABLED }}
-            AwsSecretsManagerSettings__Region: ${{ vars.AWS_REGION }}
-            ASPNETCORE_Environment: 'Production'
+            AwsSecretsManagerSettings__SecretName=${{ secrets.AWS_SECRET_NAME }}
+            AwsSecretsManagerSettings__Enabled=${{ vars.SECRETS_ENABLED }}
+            AwsSecretsManagerSettings__Region=${{ vars.AWS_REGION }}
+            ASPNETCORE_Environment=Production
 
       - name: Deploy Amazon ECS task definition
         env:
@@ -158,10 +158,10 @@ jobs:
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
             AWS_REGION=${{ env.AWS_REGION_2 }}
-            AwsSecretsManagerSettings__SecretName: ${{ secrets.AWS_SECRET_NAME }}
-            AwsSecretsManagerSettings__Enabled: ${{ vars.SECRETS_ENABLED }}
-            AwsSecretsManagerSettings__Region: ${{ vars.AWS_REGION }}
-            ASPNETCORE_Environment: 'Production'
+            AwsSecretsManagerSettings__SecretName=${{ secrets.AWS_SECRET_NAME }}
+            AwsSecretsManagerSettings__Enabled=${{ vars.SECRETS_ENABLED }}
+            AwsSecretsManagerSettings__Region=${{ vars.AWS_REGION }}
+            ASPNETCORE_Environment=Production
 
       - name: Deploy Amazon ECS task definition
         env:
