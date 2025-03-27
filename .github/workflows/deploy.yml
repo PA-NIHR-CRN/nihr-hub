@@ -8,6 +8,11 @@ on:
 
 env:
   AWS_REGION_2: eu-west-2
+  AwsSecretsManagerSettings__SecretName: ${{ secrets.AWS_SECRET_NAME }}
+  AwsSecretsManagerSettings__Enabled: ${{ vars.SECRETS_ENABLED }}
+  AwsSecretsManagerSettings__Region: ${{ vars.AWS_REGION }}
+  ASPNETCORE_Environment: 'Production'
+
 
 jobs:
   build:
@@ -25,6 +30,14 @@ jobs:
     name: "Deploy Test"
     runs-on: ubuntu-latest
     steps:
+
+      - name: Check Variables
+        run: |
+          echo "AWS_REGION_2: $AWS_REGION_2"
+          echo "AwsSecretsManagerSettings__Enabled: $AwsSecretsManagerSettings__Enabled"
+          echo "AwsSecretsManagerSettings__Region: $AwsSecretsManagerSettings__Region"
+          echo "ASPNETCORE_Environment: $ASPNETCORE_Environment"
+
       - uses: actions/checkout@v3
 
       - name: Configure AWS credentials (dev)
