@@ -33,7 +33,6 @@ jobs:
 
       - name: Check Variables
         run: |
-          echo "AWS_REGION_2: $AWS_REGION_2"
           echo "AwsSecretsManagerSettings__Enabled: $AwsSecretsManagerSettings__Enabled"
           echo "AwsSecretsManagerSettings__Region: $AwsSecretsManagerSettings__Region"
           echo "ASPNETCORE_Environment: $ASPNETCORE_Environment"
@@ -108,16 +107,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Configure AWS credentials (dev)
+      - name: Configure AWS credentials (prod)
         uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_SECRET }}
-          aws-region: ${{ env.AWS_REGION_2 }}
-
-      - name: Configure AWS credentials (prod)
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
           aws-region: ${{ env.AWS_REGION_2 }}
 
       - name: Login to Amazon ECR
@@ -127,7 +121,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
         env:
-          ECR_REPOSITORY: nihrp-ecr-prod-nihr-hub-repository
+          ECR_REPOSITORY: nihrp-ecr-prod-repository-nihr-hub
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_NAME_TAG: nihr-hub
           IMAGE_SHA_TAG: nihr-hub-${{ github.sha }}
