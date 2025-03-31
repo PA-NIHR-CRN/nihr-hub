@@ -83,7 +83,6 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
-            AWS_REGION=${{ env.AWS_REGION_2 }}
             AwsSecretsManagerSettings__SecretName=${{ secrets.AWS_SECRET_NAME }}
             AwsSecretsManagerSettings__Enabled=${{ vars.SECRETS_ENABLED }}
             AwsSecretsManagerSettings__Region=${{ vars.AWS_REGION }}
@@ -112,8 +111,8 @@ jobs:
       - name: Configure AWS credentials (dev)
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: ${{ secrets.NIHR_DEVELOPMENT_IAM_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.NIHR_DEVELOPMENT_IAM_ACCESS_KEY_SECRET }}
+          aws-access-key-id: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_SECRET }}
           aws-region: ${{ env.AWS_REGION_2 }}
 
       - name: Configure AWS credentials (prod)
@@ -157,7 +156,6 @@ jobs:
           container-name: ${{ env.CONTAINER_NAME }}
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: |
-            AWS_REGION=${{ env.AWS_REGION_2 }}
             AwsSecretsManagerSettings__SecretName=${{ secrets.AWS_SECRET_NAME }}
             AwsSecretsManagerSettings__Enabled=${{ vars.SECRETS_ENABLED }}
             AwsSecretsManagerSettings__Region=${{ vars.AWS_REGION }}
