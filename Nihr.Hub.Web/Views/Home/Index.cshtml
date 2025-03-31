@@ -48,7 +48,7 @@
                 <div id="favourites-list" class="icon-container">
                     @foreach (var application in Model.Favourites)
                     {
-                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link">
+                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
                             <img alt="@application.Name"
                                  src="images/app-icons/@application.ImageName"/>
                             <span class="icon-label">@application.Name</span>
@@ -65,7 +65,7 @@
                 <div id="all-applications" class="icon-container">
                     @foreach (var application in Model.AllApplications)
                     {
-                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link">
+                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
                             <img alt="@application.Name" src="images/app-icons/@application.ImageName"/>
                             <span class="icon-label">@application.Name</span>
                         </a>
