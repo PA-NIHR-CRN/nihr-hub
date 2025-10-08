@@ -5,5 +5,5 @@ namespace Nihr.Hub.Web.Models;
 
 public class FavouritesModel
 {
-    [JsonPropertyName("favouriteIds")] public List<int> FavouriteIds { get; set; }
+    [JsonPropertyName("favouriteIds")] public List<int> FavouriteIds { get; set; } = [];
 }

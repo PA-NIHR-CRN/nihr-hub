@@ -13,7 +13,6 @@ env:
   AwsSecretsManagerSettings__Region: ${{ vars.AWS_REGION }}
   ASPNETCORE_Environment: 'Production'
 
-
 jobs:
   build:
     name: "Build"
@@ -25,7 +24,7 @@ jobs:
           dotnet-version: "9.0.x"
 
   deploy-test:
-    needs: [build]
+    needs: [ build ]
     environment: TEST
     name: "Deploy Test"
     runs-on: ubuntu-latest
@@ -40,7 +39,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS credentials (dev)
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@00943011d9042930efac3dcd3a170e4273319bc8
         with:
           aws-access-key-id: ${{ secrets.NIHR_DEVELOPMENT_IAM_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.NIHR_DEVELOPMENT_IAM_ACCESS_KEY_SECRET }}
@@ -48,7 +47,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -57,10 +56,12 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_NAME_TAG: nihr-hub
           IMAGE_SHA_TAG: nihr-hub-${{ github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_SECRET_NAME: ${{ secrets.AWS_SECRET_NAME }}
         run: |
           echo "Using registry ${{ env.ECR_REGISTRY }}"
           echo "Tagging image with ${{ env.IMAGE_NAME_TAG}} and ${{ env.IMAGE_SHA_TAG }}"
-          docker build -f Nihr.Hub.Web/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_NAME_TAG --build-arg NUGET_PACKAGE_USERNAME=USERNAME --build-arg NUGET_PACKAGE_TOKEN=${{ secrets.GITHUB_TOKEN }} --build-arg AWS_SECRET=${{ secrets.AWS_SECRET_NAME }}  --build-arg AWS_REGION=${{ vars.AWS_REGION }} --build-arg SECRETS_ENABLED=${{ vars.SECRETS_ENABLED }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG .
+          docker build -f Nihr.Hub.Web/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_NAME_TAG --build-arg NUGET_PACKAGE_USERNAME=USERNAME --build-arg NUGET_PACKAGE_TOKEN=$GITHUB_TOKEN --build-arg AWS_SECRET=$AWS_SECRET_NAME --build-arg AWS_REGION=${{ vars.AWS_REGION }} --build-arg SECRETS_ENABLED=${{ vars.SECRETS_ENABLED }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG .
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG" >> "$GITHUB_OUTPUT"
 
@@ -76,7 +77,7 @@ jobs:
         env:
           ECS_TASK_DEFINITION: /home/runner/work/nihr-hub/nihr-hub/Nihr.Hub.Infrastructure/.aws/task-definition-test.json
           CONTAINER_NAME: nihrd-ecs-test-nihr-hub-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        uses: aws-actions/amazon-ecs-render-task-definition@5cb8c74c1b1ecaec4c8ea82eff82c009333509ce
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
@@ -91,7 +92,7 @@ jobs:
         env:
           ECS_SERVICE: nihrd-ecs-test-nihr-hub-service
           ECS_CLUSTER: nihrd-ecs-test-nihr-hub-cluster
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@1beffbdddb3eb5f83c7a746c3e9bafeccdccbbaa
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}
@@ -108,7 +109,7 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Configure AWS credentials (prod)
-        uses: aws-actions/configure-aws-credentials@v2
+        uses: aws-actions/configure-aws-credentials@00943011d9042930efac3dcd3a170e4273319bc8
         with:
           aws-access-key-id: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.NIHR_PROD_IAM_ACCESS_KEY_SECRET }}
@@ -116,7 +117,7 @@ jobs:
 
       - name: Login to Amazon ECR
         id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        uses: aws-actions/amazon-ecr-login@062b18b96a7aff071d4dc91bc00c4c1a7945b076
 
       - name: Build, tag, and push image to Amazon ECR
         id: build-image
@@ -125,10 +126,12 @@ jobs:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           IMAGE_NAME_TAG: nihr-hub
           IMAGE_SHA_TAG: nihr-hub-${{ github.sha }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          AWS_SECRET: ${{ secrets.AWS_SECRET_NAME }}
         run: |
           echo "Using registry ${{ env.ECR_REGISTRY }}"
           echo "Tagging image with ${{ env.IMAGE_NAME_TAG}} and ${{ env.IMAGE_SHA_TAG }}"
-          docker build -f Nihr.Hub.Web/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_NAME_TAG --build-arg NUGET_PACKAGE_USERNAME=USERNAME --build-arg NUGET_PACKAGE_TOKEN=${{ secrets.GITHUB_TOKEN }} --build-arg AWS_SECRET=${{ secrets.AWS_SECRET_NAME }}  --build-arg AWS_REGION=${{ vars.AWS_REGION }} --build-arg SECRETS_ENABLED=${{ vars.SECRETS_ENABLED }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG .
+          docker build -f Nihr.Hub.Web/Dockerfile -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_NAME_TAG --build-arg NUGET_PACKAGE_USERNAME=USERNAME --build-arg NUGET_PACKAGE_TOKEN=$GITHUB_TOKEN --build-arg AWS_SECRET=$AWS_SECRET_NAME  --build-arg AWS_REGION=${{ vars.AWS_REGION }} --build-arg SECRETS_ENABLED=${{ vars.SECRETS_ENABLED }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG .
           docker push --all-tags $ECR_REGISTRY/$ECR_REPOSITORY
           echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_SHA_TAG" >> "$GITHUB_OUTPUT"
 
@@ -144,7 +147,7 @@ jobs:
         env:
           ECS_TASK_DEFINITION: /home/runner/work/nihr-hub/nihr-hub/Nihr.Hub.Infrastructure/.aws/task-definition-prod.json
           CONTAINER_NAME: nihrp-ecs-prod-nihr-hub-container
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        uses: aws-actions/amazon-ecs-render-task-definition@5cb8c74c1b1ecaec4c8ea82eff82c009333509ce
         with:
           task-definition: ${{ env.ECS_TASK_DEFINITION }}
           container-name: ${{ env.CONTAINER_NAME }}
@@ -159,7 +162,7 @@ jobs:
         env:
           ECS_SERVICE: nihrp-ecs-prod-nihr-hub-service
           ECS_CLUSTER: nihrp-ecs-prod-nihr-hub-cluster
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        uses: aws-actions/amazon-ecs-deploy-task-definition@1beffbdddb3eb5f83c7a746c3e9bafeccdccbbaa
         with:
           task-definition: ${{ steps.task-def.outputs.task-definition }}
           service: ${{ env.ECS_SERVICE }}

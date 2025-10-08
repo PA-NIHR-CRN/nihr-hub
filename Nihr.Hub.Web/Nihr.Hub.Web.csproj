@@ -837,6 +837,7 @@
     <ItemGroup>
       <PackageReference Include="AWSSDK.SSO" Version="3.7.400.85" />
       <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.400.86" />
+      <PackageReference Include="Google.Apis.Admin.Directory.directory_v1" Version="1.71.0.3925" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="9.0.1" />
       <PackageReference Include="nihr.infrastructure" Version="1.0.0-preview" />
     </ItemGroup>
