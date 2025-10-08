@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.Security.Claims;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,8 @@ public class HomeController(
     ILogger<HomeController> logger,
     IUserRepository userRepository,
     IOptions<AupSettings> aupOptions,
-    IOptions<HubApplicationSettings> hubApplicationOptions) : Controller
+    IOptions<HubApplicationSettings> hubApplicationOptions,
+    IGoogleAdminService googleAdminService) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
 
@@ -55,12 +57,13 @@ public class HomeController(
 
         var user = await userRepository.GetUser(email, cancellationToken);
 
-        if (user == null || user.AupAcceptedVersion != aupCurrentVersion)
+        if (user.AupAcceptedVersion != aupCurrentVersion)
         {
             return RedirectToAction("DisplayAup");
         }
 
         List<HubApplication> favouriteApps;
+        var ou = googleAdminService.GetGoogleUserOuAsync(email).Result;
 
         if (user.Favourites.Count == 0)
         {
@@ -69,7 +72,9 @@ public class HomeController(
         }
         else
         {
-            favouriteApps = hubApplicationOptions.Value.Applications.Where(app => user.Favourites.Contains(app.Id))
+            favouriteApps = hubApplicationOptions.Value.Applications.Where(app =>
+                    user.Favourites.Contains(app.Id) &&
+                    (app.AllowedOperatingUnits == null || app.AllowedOperatingUnits.Contains(ou)))
                 .OrderBy(app => user.Favourites.IndexOf(app.Id))
                 .ToList();
         }
@@ -77,7 +82,9 @@ public class HomeController(
         return View(new HomeModel
         {
             FullName = fullName, GivenName = givenName, Email = email,
-            AllApplications = hubApplicationOptions.Value.Applications.Where(app => !favouriteApps.Contains(app))
+            AllApplications = hubApplicationOptions.Value.Applications.Where(app =>
+                    !favouriteApps.Contains(app) &&
+                    (app.AllowedOperatingUnits == null || app.AllowedOperatingUnits.Contains(ou)))
                 .ToList(),
             Favourites = favouriteApps
         });
