@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Nihr.Hub.Domain.Entities;
@@ -105,9 +106,11 @@ public class HomeController(
 
         var user = await userRepository.GetUser(email, cancellationToken);
 
-        user.Favourites = model.FavouriteIds;
-
-        await userRepository.SaveUser(user, cancellationToken);
+        if (user != null)
+        {
+            user.Favourites = model.FavouriteIds;
+            await userRepository.SaveUser(user, cancellationToken);
+        }
 
         return NoContent();
     }
@@ -156,9 +159,32 @@ public class HomeController(
         return this.RedirectToAction("Index");
     }
 
+    [Authorize]
+    [HttpGet]
+    [Route("help")]
+    public IActionResult Help()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var email = User?.GetEmail();
+        var requestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+
+        var exceptionHandlerPathFeature =
+            HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+
+        var exception = exceptionHandlerPathFeature?.Error;
+
+        // 2. Get the path where the error occurred.
+        var errorPath = exceptionHandlerPathFeature?.Path;
+
+        _logger.LogCritical(exception,
+            "An unhandled exception occurred at path: {ErrorPath} for user {Email} with ID {RequestId}.",
+            errorPath, email, requestId);
+
+        return View(new ErrorViewModel { RequestId = requestId });
     }
 }

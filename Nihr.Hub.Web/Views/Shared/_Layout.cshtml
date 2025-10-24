@@ -21,7 +21,9 @@
 <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 <header class="govuk-width-container govuk-!-padding-top-3 govuk-!-padding-bottom-3">
     <div class="govuk-header__logo">
-        <img src="images/nihr-logo.png" alt="NIHR Logo"/>
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="images/nihr-logo.png" alt="NIHR Logo"/>
+        </a>
     </div>
     <div class="authentication-controls">
         @if (User.Identity is { IsAuthenticated: true })

@@ -1,7 +1,5 @@
-﻿@model HomeModel
-
-@{
-    ViewData["Title"] = "Home Page";
+﻿@{
+    ViewData["Title"] = "Help";
 }
 
 @if (User.Identity is { IsAuthenticated: true })
@@ -63,8 +61,8 @@
         <div class="govuk-grid-column-full">
             <h2 class="govuk-heading-m">All applications
                 <span
-                    class="govuk-caption-m">For more information on the applications provided as part of the Hub and any specific usage constraints, please visit our <a
-                        asp-action="Help" class="govuk-link">help</a> page.</span>
+                    class="govuk-caption-m">If you want to know more about the applications provided as part of the Hub, as well as any specific constraints with regard to use, you can visit our <a
+                        asp-action="Help">Help</a> page.</span>
             </h2>
             <div class="card">
                 <div id="all-applications" class="icon-container">
@@ -79,10 +77,4 @@
             </div>
         </div>
     </div>
-}
-
-@section Scripts
-{
-    <script src="lib/sortablejs/Sortable.min.js"></script>
-    <script src="js/favourite-apps.js"></script>
 }

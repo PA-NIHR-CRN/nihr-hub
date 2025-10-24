@@ -1,0 +1,112 @@
+h1 {
+    color: rgba(var(--nihr-blue));
+    font-weight: normal;
+    text-align: center;
+}
+
+h2 {
+    color: rgba(var(--nihr-blue));
+    font-weight: 700;
+}
+
+.news-link {
+    text-decoration: none;
+    font-weight: 700;
+    text-wrap: nowrap;
+}
+
+.news-link:hover {
+    text-decoration: underline;
+    outline: 0;
+    text-decoration-color: var(--nihr-red);
+    text-decoration-thickness: 0.1875rem;
+    text-underline-offset: 5px;
+}
+
+.hero-container {
+    display: flex;
+    align-items: center; /* Vertically align items */
+    gap: 1rem; /* Add spacing between the anchor and the input */
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.govuk-form-group {
+    flex: 0 1 50%;
+}
+
+.govuk-input {
+    padding-left: 15px;
+    padding-right: 30px;
+    border-radius: 50px;
+    height: 50px;
+    min-width: 300px;
+    width: 100%;
+}
+
+.search-wrapper {
+    position: relative; /* To position the button relative to the input */
+    display: inline-block; /* Keep the input and button in the same context */
+    width: 100%; /* Make the wrapper take up the full width */
+}
+
+.search-button {
+    position: absolute; /* Position the button inside the wrapper */
+    right: 0.5rem; /* Add some spacing from the edge */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Align button in the middle of the input */
+    width: 2.5rem; /* Set button size */
+    height: 2.5rem;
+    background: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"%3E%3Cpath d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" stroke="%23193e72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/%3E%3Cpath d="M20.9984 21.0004L16.6484 16.6504" stroke="%23193e72" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/%3E%3C/svg%3E') no-repeat center center;
+    background-size: auto; /* Scale the SVG properly */
+    border: none; /* Remove default button border */
+    cursor: pointer; /* Show pointer on hover */
+    outline: none; /* Remove focus outline */
+    padding: 0; /* Reset padding */
+    border-radius: 50%;
+}
+
+.search-button:focus {
+    background-color: #fd0;
+}
+
+body:not(.js-enabled) #favourites-caption {
+    display: none;
+}
+
+.card {
+    box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15);
+    border: 0.0625rem solid rgba(0, 0, 0, 0);
+    min-height: 100px;
+}
+
+.icon-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start; /* Ensures vertical alignment */
+    row-gap: 55px;
+    column-gap: 40px;
+    padding: 20px;
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333; /* Adjust label color */
+    font-size: 14px;
+    width: 80px; /* Ensures consistent width per icon block */
+    text-align: center;
+}
+
+.icon img {
+    height: 50px;
+    width: auto;
+    margin-bottom: 5px; /* Space between icon and label */
+}
+
+.icon-label {
+    text-align: center;
+}
