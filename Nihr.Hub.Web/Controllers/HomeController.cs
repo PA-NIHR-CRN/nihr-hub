@@ -58,7 +58,7 @@ public class HomeController(
 
         var user = await userRepository.GetUser(email, cancellationToken);
 
-        if (user.AupAcceptedVersion != aupCurrentVersion)
+        if (user == null || user.AupAcceptedVersion != aupCurrentVersion)
         {
             return RedirectToAction("DisplayAup");
         }

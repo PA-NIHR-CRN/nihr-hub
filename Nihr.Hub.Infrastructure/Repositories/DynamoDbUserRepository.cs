@@ -25,7 +25,7 @@ public class DynamoDbUserRepository : IUserRepository
         _context = new DynamoDBContext(client);
     }
 
-    public async Task<User> GetUser(string email, CancellationToken cancellationToken)
+    public async Task<User?> GetUser(string email, CancellationToken cancellationToken)
     {
         return await _context.LoadAsync<User>(email, _dynamoDbOperationConfig, cancellationToken);
     }
