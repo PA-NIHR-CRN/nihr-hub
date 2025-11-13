@@ -1,12 +1,5 @@
-h1 {
-    color: rgba(var(--nihr-blue));
-    font-weight: normal;
+.govuk-heading-l {
     text-align: center;
-}
-
-h2 {
-    color: rgba(var(--nihr-blue));
-    font-weight: 700;
 }
 
 .news-link {

@@ -1,14 +1,3 @@
-h1 {
-    color: rgba(var(--nihr-blue));
-    font-weight: normal;
-    text-align: center;
-}
-
-h2 {
-    color: rgba(var(--nihr-blue));
-    font-weight: 700;
-}
-
 .news-link {
     text-decoration: none;
     font-weight: 700;

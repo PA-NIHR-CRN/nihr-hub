@@ -50,6 +50,10 @@ header::after {
     display: inherit;
 }
 
+.govuk-main-wrapper {
+    padding-top: 0;
+}
+
 .authentication-controls {
     float: right;
     display: flex;
