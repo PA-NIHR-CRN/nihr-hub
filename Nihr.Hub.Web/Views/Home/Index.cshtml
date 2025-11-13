@@ -4,77 +4,79 @@
     ViewData["Title"] = "Home Page";
 }
 
-@if (User.Identity is { IsAuthenticated: true })
-{
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h1 class="govuk-heading-l">Welcome to the NIHR Hub, <b>@Model.GivenName</b>.</h1>
-        </div>
-        <div class="govuk-grid-column-full">
-            <div class="hero-container">
-                <a class="news-link govuk-link" href="https://www.nihr.ac.uk/news-views-stories">News, views and
-                    stories</a>
-                <div class="govuk-form-group govuk-!-margin-bottom-0">
-                    <h1 class="govuk-label-wrapper">
-                        <label class="govuk-label govuk-visually-hidden" for="nihr-search-input">
-                            Search information across the NIHR
-                        </label>
-                    </h1>
-                    <div class="search-wrapper">
-                        <form target="_blank" action="https://cloudsearch.google.com/cloudsearch">
-                            <input placeholder="Search NIHR" class="govuk-input govuk-!-margin-bottom-0"
-                                   id="nihr-search-input"
-                                   name="q" type="text">
-                            <button type="submit" value="Update results" class="search-button">
-                            </button>
-                        </form>
-                    </div>
+<div class="govuk-grid-row govuk-!-margin-top-8">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-l">Welcome to the NIHR Hub, <b>@Model.GivenName</b>.</h1>
+    </div>
+    <div class="govuk-grid-column-full">
+        <div class="hero-container">
+            <a class="news-link govuk-link" href="https://www.nihr.ac.uk/news-views-stories">News, views and
+                stories</a>
+            <div class="govuk-form-group govuk-!-margin-bottom-0">
+                <h1 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-visually-hidden" for="nihr-search-input">
+                        Search information across the NIHR
+                    </label>
+                </h1>
+                <div class="search-wrapper">
+                    <form target="_blank" action="https://cloudsearch.google.com/cloudsearch">
+                        <input placeholder="Search NIHR" class="govuk-input govuk-!-margin-bottom-0"
+                               id="nihr-search-input"
+                               name="q" type="text">
+                        <button type="submit" value="Update results" class="search-button">
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
-        </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
     </div>
-    <div class="govuk-grid-row govuk-!-margin-bottom-4">
-        <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-m">
-                Favourite applications
-                <span id="favourites-caption" class="govuk-caption-m">Drag application icons into this section to favourite them</span>
-            </h2>
-            <div class="card">
-                <div id="favourites-list" class="icon-container">
-                    @foreach (var application in Model.Favourites)
-                    {
-                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
-                            <img alt="@application.Name"
-                                 src="images/app-icons/@application.ImageName"/>
-                            <span class="icon-label">@application.Name</span>
-                        </a>
-                    }
-                </div>
+</div>
+<div class="govuk-grid-row govuk-!-margin-bottom-4">
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">
+            Favourite applications
+            <span id="favourites-caption"
+                  class="govuk-caption-m">Drag application icons into this section to favourite them</span>
+        </h2>
+        <div class="card">
+            <div id="favourites-list" class="icon-container">
+                @foreach (var application in Model.Favourites)
+                {
+                    <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
+                        <img alt="@application.Name"
+                             src="images/app-icons/@application.ImageName"/>
+                        <span class="icon-label">@application.Name</span>
+                    </a>
+                }
             </div>
         </div>
     </div>
-    <div class="govuk-grid-row">
-        <div class="govuk-grid-column-full">
-            <h2 class="govuk-heading-m">All applications</h2>
-            <div class="card">
-                <div id="all-applications" class="icon-container">
-                    @foreach (var application in Model.AllApplications)
-                    {
-                        <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
-                            <img alt="@application.Name" src="images/app-icons/@application.ImageName"/>
-                            <span class="icon-label">@application.Name</span>
-                        </a>
-                    }
-                </div>
+</div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m">All applications
+            <span
+                class="govuk-caption-m">For more information on the applications provided as part of the Hub and any specific usage constraints, please visit our <a
+                    asp-action="Help" class="govuk-link">help</a> page.</span>
+        </h2>
+        <div class="card">
+            <div id="all-applications" class="icon-container">
+                @foreach (var application in Model.AllApplications)
+                {
+                    <a data-id="@application.Id" href="@application.Url" class="icon govuk-link" target="_blank">
+                        <img alt="@application.Name" src="images/app-icons/@application.ImageName"/>
+                        <span class="icon-label">@application.Name</span>
+                    </a>
+                }
             </div>
         </div>
     </div>
-}
+</div>
 
 @section Scripts
 {

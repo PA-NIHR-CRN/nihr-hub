@@ -1,0 +1,7 @@
+.govuk-cookie-banner .govuk-button-group {
+    align-items: center;
+}
+
+#cookie-confirmation-hide-button {
+    display: none;
+}

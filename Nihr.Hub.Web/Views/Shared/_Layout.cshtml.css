@@ -37,8 +37,21 @@ header::after {
     clear: both;
 }
 
+.govuk-header__logo {
+    width: 37%;
+}
+
 .govuk-header__logo img {
     max-width: 325px;
+}
+
+.govuk-header__link--homepage {
+    max-width: 325px;
+    display: inherit;
+}
+
+.govuk-main-wrapper {
+    padding-top: 0;
 }
 
 .authentication-controls {

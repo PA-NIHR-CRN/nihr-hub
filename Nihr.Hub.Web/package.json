@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "govuk-frontend": "^5.8.0",
+    "govuk-frontend": "^5.13.0",
     "sortablejs": "^1.15.6"
   }
 }
