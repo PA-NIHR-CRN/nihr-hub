@@ -1,0 +1,321 @@
+﻿@using Nihr.Hub.Web.Helpers
+@{
+  ViewData["Title"] = "Help";
+}
+
+@Html.GovUkBreadcrumbs(
+  [
+    new BreadcrumbItem { Text = "Home", Url = Url.Action("Index", "Home")! },
+    new BreadcrumbItem { Text = "Help", Url = Url.Action("Help", "Home")! }
+  ]
+)
+<div class="govuk-grid-row govuk-!-margin-top-4">
+  <div class="govuk-grid-column-full">
+    <ul class="govuk-list">
+      <li><a class="govuk-link" href="#overview">Overview</a></li>
+      <li><a class="govuk-link" href="#google-workspace">Google Workspace</a></li>
+      <li><a class="govuk-link" href="#google-gemini">Google Gemini</a></li>
+      <li><a class="govuk-link" href="#appsheet">AppSheet</a></li>
+      <li><a class="govuk-link" href="#docusign">Docusign</a></li>
+      <li><a class="govuk-link" href="#lucid">Lucid</a></li>
+      <li><a class="govuk-link" href="#kanbanchi">Kanbanchi</a></li>
+      <li><a class="govuk-link" href="#jira-confluence">Jira / Confluence</a></li>
+      <li><a class="govuk-link" href="#technology-training">Technology Training (via Live Learning)</a></li>
+      <li><a class="govuk-link" href="#eduroam">Eduroam</a></li>
+      <li><a class="govuk-link" href="#nihr-tips-and-tricks">NIHR Tips and Tricks</a></li>
+      <li><a class="govuk-link" href="#nihr-learn">NIHR Learn</a></li>
+      <li><a class="govuk-link" href="#support">Support</a></li>
+      <li><a class="govuk-link" href="#directory">Directory</a></li>
+      <li><a class="govuk-link" href="#nihr-info-site">NIHR Info Site</a></li>
+    </ul>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-l" id="overview">Overview</h2>
+    <p class="govuk-body">
+      The <strong>NIHR Hub</strong> is your centrally-provided suite of secure, cloud-based applications, designed to
+      make working
+      together across the NIHR easier and more effective. The <strong>NIHR IS Function</strong> is responsible for
+      provisioning access to
+      these tools, and providing limited support where appropriate.
+    </p>
+    <p class="govuk-body">
+      Our strength comes from collaboration, but we know that working between different host organisations, each with
+      its own internal IT systems, can be challenging. The NIHR Hub acts as a bridge, providing a common set of digital
+      tools that everyone across the NIHR can use.
+    </p>
+    <p class="govuk-body">Whether you need to co-author a document with a colleague in another centre, host a video
+      conference with a
+      national team, or collaborate on a virtual whiteboard, the Hub provides the approved tools to do so securely and
+      efficiently.
+    </p>
+    <p class="govuk-body">
+      Think of it as an extension of your own organisation's IT, built specifically for cross-NIHR collaboration.
+    </p>
+    <p class="govuk-body">
+      Explore the applications and services available below to see how the Hub can support your work.
+    </p>
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+    <h2 class="govuk-heading-l" id="google-workspace">Google Workspace</h2>
+    <p class="govuk-body"><strong>What is it?</strong> The foundation of the NIHR Hub, providing integrated tools for
+      your daily work. Your nihr.ac.uk account gives you access to Gmail, Calendar, Drive (for cloud storage), the
+      Google Docs suite (Docs, Sheets, Slides), Google Meet (for video), Google Chat (for instant messaging), Sites (for
+      simple website building), Forms (for surveys), Keep (for notes), Groups (for mailing lists), and more.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR Hub users. This is the essential toolkit for
+      cross-NIHR communication and collaboration.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Primary Use:</strong> This suite is for cross-NIHR collaboration. Continue using your host
+        institution's systems for non-NIHR work.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="google-gemini">Google Gemini</h2>
+    <p class="govuk-body"><strong>What is it?</strong> Google's conversational AI tool. You can ask it questions in
+      natural language to help you draft emails, analyse text, generate ideas, write code, or learn about new topics. It
+      is integrated within the NIHR Hub to provide a secure environment for exploring the use of AI.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR Hub users who want to explore how AI can enhance their
+      productivity and creativity.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Do not use Gemini for non-NIHR related work:</strong> Do not input any non-NIHR related information
+        into Gemini. Good practice is to treat all prompts as if they are public.
+      </li>
+      <li><strong>Accuracy:</strong> AI-generated content can be inaccurate or biased. You are responsible for
+        fact-checking and verifying any information you use from Gemini.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="appsheet">AppSheet</h2>
+    <p class="govuk-body"><strong>What is it?</strong> AppSheet allows you to create mobile and web applications without
+      writing any code. For example, you could build a simple app for event registration, project tracking, or inventory
+      management.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> Technical colleagues and teams who need a custom solution for a
+      specific internal business process but don't have access to software development resources.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Licensing:</strong> The NIHR has AppSheet Core licensing as part of it’s Google Workspace
+        subscription. Please review the features available under the AppSheet Core licence before considering AppSheet
+        for your development.
+      </li>
+      <li><strong>External users:</strong> AppSheet applications can only be shared with internal NIHR users (users with
+        an nihr.ac.uk account).
+      </li>
+      <li><strong>Data Sensitivity:</strong> Do not use AppSheet to create applications that collect or manage personal,
+        confidential, or sensitive data without formal Information Governance review and approval.
+      </li>
+      <li><strong>Support:</strong> Centrally-provided support for apps you build is limited. You are primarily
+        responsible for maintaining and supporting the applications you create.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="docusign">Docusign</h2>
+    <p class="govuk-body"><strong>What is it?</strong> A secure platform that replaces paper-and-ink signatures with a
+      faster, fully audited electronic process. It is used for contracts, formal agreements, and official approvals.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> Primarily for colleagues in operations, finance, HR, and
+      research management. A license is required to send documents, though anyone can receive and sign them.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Licensing:</strong> Sending documents requires a specific license. To request one, please contact the
+        Service Desk.
+      </li>
+      <li><strong>Legally Binding:</strong> Signatures captured via DocuSign are legally compliant and carry a full
+        audit trail.
+      </li>
+      <li><strong>Programmatic use:</strong> The NIHR has a finite number of ‘envelopes’ that can be sent using Docusign
+        each year. An envelope is a document that needs signing. For this reason, programmatic use of Docusign is
+        allowed on a case by case basis. Do not assume you can integrate the NIHR Docusign with your application without
+        first consulting the NIHR Service Desk.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="lucid">Lucid</h2>
+    <p class="govuk-body"><strong>What is it?</strong> The Lucid suite helps your team see and build the future.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Lucidchart:</strong> A tool for creating professional flowcharts, process maps, org charts, and
+        technical diagrams.
+      </li>
+      <li><strong>Lucidspark:</strong> An infinite virtual whiteboard for brainstorming, free-form ideation, and
+        planning sessions.
+      </li>
+    </ul>
+    <p class="govuk-body"><strong>Who's it for?</strong> Project managers, business analysts, workshop facilitators, and
+      any team that needs to visualise complex information collaboratively.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Licensing:</strong> Creating and editing files in Lucid requires a license, which is allocated based
+        on role requirements. Contact the Service Desk to enquire.
+      </li>
+      <li><strong>Data Sensitivity:</strong> Be mindful of the information you place in diagrams, especially if they are
+        widely shared.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="kanbanchi">Kanbanchi</h2>
+    <p class="govuk-body"><strong>What is it?</strong> A task board that helps you visualise your workflow, typically
+      using columns like 'To Do', 'In Progress', and 'Done'. It's fully integrated with Google Workspace, allowing you
+      to attach files from Drive and manage deadlines.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> Teams looking for a straightforward, visual way to manage
+      shared tasks and small-to-medium-sized projects without the complexity of a tool like Jira.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Simplicity is Key:</strong> Kanbanchi is best for simple workflow and task management. For complex
+        projects with detailed reporting needs, Jira may be more appropriate. Kanbanchi is very similar to the ‘Work
+        Management’ project type in Jira.
+      </li>
+      <li><strong>Licences:</strong> Everyone in the NIHR can access Kanbanchi, as we have a domain-wide licence.</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="jira-confluence">Jira / Confluence</h2>
+    <h3 class="govuk-heading-m">What is it?</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Jira:</strong> A tool for planning, tracking, and managing complex projects, especially favoured by
+        software development and technical teams. It's built for agile methodologies, bug tracking, and detailed
+        reporting.
+      </li>
+      <li><strong>Confluence:</strong> A team workspace and wiki where you can create, share, and collaborate on project
+        documentation, meeting notes, plans, and knowledge bases.
+      </li>
+    </ul>
+    <p class="govuk-body"><strong>Who's it for?</strong> Formal project teams, technical teams, and programme management
+      offices that require structured, auditable project tracking and documentation.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Licensing:</strong> Anyone with an nihr.ac.uk can access Jira and Confluence. However, we do have a
+        finite number of licences that are rotated regularly when users are inactive for a period of time.
+      </li>
+      <li><strong>Jira project type:</strong> Users of Jira are only allowed to create ‘team-managed’ projects. This
+        give project teams full autonomy in configuring their Jira projects, rather than relying on the IS Function team
+        for administration.
+      </li>
+      <li><strong>Support:</strong> Centrally-provided support for projects you create is limited. You are primarily
+        responsible for maintaining and supporting the projects/spaces you create. Learning is available through the
+        Live Learning portal.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="technology-training">Technology Training (via Live Learning)</h2>
+    <p class="govuk-body"><strong>What is it?</strong> A schedule of virtual training courses covering key Hub tools
+      like Google Workspace, Lucid, and more. These sessions are interactive and led by professional trainers.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR colleagues who want to improve their digital skills,
+      learn best practices, and get more value from the Hub tools.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Booking is Essential:</strong> You must register for sessions in advance. Check the schedule and sign
+        up on <a href="#" class="govuk-link">[Link to NIHR Learn or booking page]</a>.
+      </li>
+      <li><strong>Recordings:</strong> Many sessions are recorded and made available for later viewing if you are unable
+        to attend live.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="eduroam">Eduroam</h2>
+    <p class="govuk-body"><strong>What is it?</strong> "Eduroam" is a service that allows you to connect to the internet
+      when visiting other participating organisations, using your NIHR Hub credentials.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR colleagues who travel to other academic or research
+      locations for meetings, conferences, or collaborative work.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Credentials:</strong> You will use your NIHR Hub email address (your.name@nihr.ac.uk) and password to
+        connect.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="nihr-tips-and-tricks">NIHR Tips and Tricks</h2>
+    <p class="govuk-body"><strong>What is it?</strong> A knowledge-sharing chat space where colleagues can share helpful
+      tips, shortcuts, and clever ways of working with the Hub tools.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> Everyone. It's a place to both learn from your peers and share
+      your own expertise.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Community-Led:</strong> The advice found here is from colleagues, not the NIHR IS Function. For
+        technical issues, always contact Support.
+      </li>
+      <li><strong>Contribute!</strong> If you discover a great way to do something, share it with the community.</li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="nihr-learn">NIHR Learn</h2>
+    <p class="govuk-body"><strong>What is it?</strong> NIHR Learn is the central platform for all formal NIHR training.
+      This includes your mandatory compliance courses (e.g., Information Governance, Health and Safety) as well as a
+      catalogue of professional development opportunities.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR staff and colleagues.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Your Official Record:</strong> This system holds the official record of your training history and
+        compliance status.
+      </li>
+      <li><strong>Separate from Tech Training:</strong> While NIHR Learn is where you might book some courses, it is
+        distinct from the informal "Tips andTricks" and the live "Technology Training" sessions.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="support">Support</h2>
+    <p class="govuk-body"><strong>What is it?</strong> The NIHR Service Desk, provided by the NIHR IS Function. They are
+      here to help you with technical problems, system access, and questions about any of the Hub services.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR Hub users.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>How to Contact:</strong> You can reach the Service Desk via
+        <a href="#" class="govuk-link">[Link to
+          your support portal, email address, or phone number]</a>.
+      </li>
+      <li><strong>Provide Detail:</strong> When logging a ticket, please provide as much detail as possible (e.g., which
+        application, what you were trying to do, and any error messages) to ensure a speedy resolution.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="directory">Directory</h2>
+    <p class="govuk-body"><strong>What is it?</strong> An online "phonebook" that allows you to find people across the
+      entire NIHR network. You can search by name, role, or part of the organisation.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR colleagues.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Keep Your Profile Updated:</strong> Your visibility in the directory depends on your profile being
+        accurate. Please take a moment to check your own details and update them if necessary.
+      </li>
+      <li><strong>Source of Truth:</strong> This is the definitive place to find someone's correct job title and NIHR
+        contact details.
+      </li>
+    </ul>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    <h2 class="govuk-heading-l" id="nihr-info-site">NIHR Info Site</h2>
+    <p class="govuk-body"><strong>What is it?</strong> The primary information portal for the NIHR. This is where you
+      will find official communications, HR policies, organisational charts, branding guidelines, and corporate
+      documents.</p>
+    <p class="govuk-body"><strong>Who's it for?</strong> All NIHR colleagues.</p>
+    <h3 class="govuk-heading-m">Things to be aware of</h3>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><strong>Official Information:</strong> If you are looking for an official policy or the latest corporate news,
+        this is the place to go.
+      </li>
+      <li><strong>Different from Confluence/Drive:</strong> The Info Site is for published, official information.
+        Confluence is for project-level knowledge, and Google Drive is for live, collaborative "work-in-progress"
+        documents.
+      </li>
+    </ul>
+  </div>
+</div>

@@ -51,6 +51,10 @@ builder.Services.AddOptions<GoogleAdminSettings>()
     .Bind(builder.Configuration.GetSection("GoogleAdminSettings"))
     .ValidateDataAnnotations();
 
+builder.Services.AddOptions<GoogleAnalyticsSettings>()
+    .Bind(builder.Configuration.GetSection("GoogleAnalytics"))
+    .ValidateDataAnnotations();
+
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
 builder.Services.AddSingleton(sp =>

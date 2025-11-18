@@ -2,6 +2,7 @@
 @using Microsoft.Extensions.Options
 @using Nihr.Hub.Infrastructure.Settings
 @inject IOptions<AupSettings> AupOptions
+@inject IOptions<GoogleAnalyticsSettings> GoogleAnalyticsSettings
 
 <!DOCTYPE html>
 <html lang="en">
@@ -13,19 +14,52 @@
     <link rel="stylesheet" href="~/lib/govuk/govuk-frontend.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/NIHR.Hub.Web.styles.css" asp-append-version="true"/>
+
+    @{
+        var consentCookie = Context.Request.Cookies["CookieConsent"];
+        var analyticsConsent = consentCookie == "true";
+        var hasRespondedToBanner = !string.IsNullOrEmpty(consentCookie);
+    }
+
+    <!-- Google tag (gtag.js) -->
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('consent', 'default', {
+            'ad_storage': '@(hasRespondedToBanner && analyticsConsent ? "granted" : "denied")',
+            'analytics_storage': '@(hasRespondedToBanner && analyticsConsent ? "granted" : "denied")',
+            'ad_user_data': '@(hasRespondedToBanner && analyticsConsent ? "granted" : "denied")',
+            'ad_personalization': '@(hasRespondedToBanner && analyticsConsent ? "granted" : "denied")'
+        });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=@GoogleAnalyticsSettings.Value.TagId"></script>
+    <script>
+        gtag('js', new Date());
+        gtag('config', '@GoogleAnalyticsSettings.Value.TagId', {
+            'cookie_domain': location.hostname
+        });
+    </script>
 </head>
 <body>
 <script>
     document.body.className += 'js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');
 </script>
+@await Html.PartialAsync("Partials/_CookieBanner")
 <a href="#main-content" class="govuk-skip-link" data-module="govuk-skip-link">Skip to main content</a>
 <header class="govuk-width-container govuk-!-padding-top-3 govuk-!-padding-bottom-3">
     <div class="govuk-header__logo">
-        <img src="images/nihr-logo.png" alt="NIHR Logo"/>
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="/images/nihr-logo.png" alt="NIHR Logo"/>
+        </a>
     </div>
     <div class="authentication-controls">
         @if (User.Identity is { IsAuthenticated: true })
         {
+            <a class="govuk-link govuk-!-margin-right-2" asp-action="Help">Help</a>
             <a class="govuk-link govuk-!-margin-right-2" href="https://myaccount.google.com">My Account</a>
             <a href="/sign-out" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
                data-module="govuk-button">
@@ -73,13 +107,19 @@
                             Accessibility
                         </a>
                     </li>
+                    <li class="govuk-footer__inline-list-item">
+                        <a class="govuk-footer__link"
+                           href="/cookies">
+                            Cookies
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="govuk-footer__meta-item">
                 <a
                     class="govuk-footer__link funded-by-dhsc-logo govuk-!-padding-top-0"
                     href="https://www.gov.uk/government/organisations/department-of-health-and-social-care">
-                    <img alt="Funded by DHSC logo" src="images/funded-by-dhsc-white.png"/>
+                    <img alt="Funded by DHSC logo" src="/images/funded-by-dhsc-white.png"/>
                 </a>
             </div>
         </div>

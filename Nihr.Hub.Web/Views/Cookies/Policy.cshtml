@@ -1,0 +1,174 @@
+@using Nihr.Hub.Web.Helpers
+@{
+  ViewData["Title"] = "Cookies Policy";
+}
+
+@Html.GovUkBreadcrumbs(
+  [
+    new BreadcrumbItem { Text = "Home", Url = Url.Action("Index", "Home")! },
+    new BreadcrumbItem { Text = "Cookies", Url = Url.Action("Index", "Cookies")! },
+    new BreadcrumbItem { Text = "Policy", Url = Url.Action("Policy", "Cookies")! }
+  ]
+)
+<div class="govuk-grid-row govuk-!-margin-top-4">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">Cookies on the NIHR Hub</h1>
+    <p class="govuk-body">
+      This page was last updated on <strong>13 November 2025</strong>.
+    </p>
+
+    <p class="govuk-body">
+      Cookies are small text files placed on your computer or mobile
+      device when you visit a website.
+    </p>
+
+    <p class="govuk-body">
+      We use cookies to ensure the NIHR Hub ("the Hub") functions
+      correctly, to remember your preferences, and to help us understand
+      how visitors use our site.
+    </p>
+
+    <h2 class="govuk-heading-m">How we use cookies</h2>
+    <p class="govuk-body">
+      We use 2 types of cookies:
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <strong
+        >Strictly necessary cookies:</strong
+        >
+        These are essential for you to move around the Hub and use its
+        features, such as accessing secure areas (logging in) or managing
+        your cookie preferences. These cookies cannot be turned off.
+      </li>
+      <li>
+        <strong
+        >Analytics cookies (optional):</strong
+        >
+        These cookies collect information about how you use the Hub, like
+        which pages you visit most often. This data helps us improve how
+        the Hub works. These are only set if you give us your consent.
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Strictly necessary cookies</h2>
+    <p class="govuk-body">
+      These essential cookies help with authentication and security. They
+      do not store any personally identifiable information.
+    </p>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Purpose</th>
+        <th scope="col" class="govuk-table__header">Expires</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><code>CookieConsent</code></td>
+        <td class="govuk-table__cell">
+          Stores your cookie consent preferences so we do not ask you
+          again on each visit.
+        </td>
+        <td class="govuk-table__cell">1 year</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <code>.AspNetCore.Cookies</code>
+        </td>
+        <td class="govuk-table__cell">
+          This is our main authentication cookie, used to keep you
+          securely logged in to your account.
+        </td>
+        <td class="govuk-table__cell">Session</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <code>.AspNetCore.Antiforgery...</code>
+        </td>
+        <td class="govuk-table__cell">
+          A security cookie used to help protect the Hub from
+          cross-site request forgery attacks.
+        </td>
+        <td class="govuk-table__cell">Session</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
+    <p class="govuk-body">
+      With your permission, we use Google Analytics to collect
+      information about how you use the Hub. This information helps us
+      improve our service.
+    </p>
+    <p class="govuk-body">
+      These cookies are not used to identify you personally.
+    </p>
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Name</th>
+        <th scope="col" class="govuk-table__header">Purpose</th>
+        <th scope="col" class="govuk-table__header">Expires</th>
+      </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell"><code>_ga</code></td>
+        <td class="govuk-table__cell">
+          Used by Google Analytics to distinguish users for
+          statistical purposes.
+        </td>
+        <td class="govuk-table__cell">2 years</td>
+      </tr>
+      <tr class="govuk-table__row">
+        <td class="govuk-table__cell">
+          <code>_ga_...</code> (e.g.,
+          <code>_ga_SV615M1HSW</code>)
+        </td>
+        <td class="govuk-table__cell">
+          Used by Google Analytics to persist session state.
+        </td>
+        <td class="govuk-table__cell">2 years</td>
+      </tr>
+      </tbody>
+    </table>
+
+    <h2 class="govuk-heading-m">How to manage your settings</h2>
+    <p class="govuk-body">
+      You can change your cookie preferences at any time.
+    </p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <strong>On the Hub:</strong> You can change your settings via our
+        cookie consent banner. If you have already made a choice, you can
+        update it by clicking the "Manage Cookies" link, which is
+        typically found in the footer of our website.
+      </li>
+      <li>
+        <strong>In your browser:</strong> You can also block or delete
+        cookies by changing your browser settings. Please note that
+        blocking all cookies may prevent the NIHR Hub from functioning
+        correctly.
+      </li>
+    </ul>
+
+    <h2 class="govuk-heading-m">Changes to this policy</h2>
+    <p class="govuk-body">
+      We may update this policy from time to time. Any changes will be
+      posted on this page.
+    </p>
+
+    <h2 class="govuk-heading-m">Contact us</h2>
+    <p class="govuk-body">
+      If you have any questions about our use of cookies, please
+      <a
+        href="https://support.nihr.ac.uk"
+        class="govuk-link"
+      >contact us via the NIHR Service Desk</a
+      >.
+    </p>
+  </div>
+</div>
