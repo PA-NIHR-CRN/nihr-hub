@@ -161,7 +161,7 @@ public class HomeController(
 
     [Authorize]
     [HttpGet]
-    [Route("help")]
+    [Route("apps-overview")]
     public IActionResult Help()
     {
         return View();
