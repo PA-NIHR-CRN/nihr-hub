@@ -1,3 +1,12 @@
+.govuk-cookie-banner {
+    border-bottom-color: rgba(var(--nihr-blue)) !important;
+    border-bottom-width: 5px;
+}
+
+.govuk-cookie-banner__heading {
+    color: black !important;
+}
+
 .govuk-cookie-banner .govuk-button-group {
     align-items: center;
 }
