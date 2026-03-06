@@ -1,0 +1,228 @@
+﻿/*@font-face {
+    font-family: "Archia";
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.eot");
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "Archia";
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.eot");
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal
+}
+
+@font-face {
+    font-family: "Archia";
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.eot");
+    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal
+}*/
+
+/*@import url('https://fonts.cdnfonts.com/css/archia');*/
+
+:root {
+    /*Primary*/
+    --nihr-coral: #fc5d5d;
+    --nihr-white: #ffffff;
+    --nihr-navy: #1c285e;
+    --nihr-off-black: #3c3c3c;
+    /*Secondary*/
+    --nihr-glove-blue: #c7e9ff;
+    --nihr-uniform-lilac: #c4c5ff;
+    --nihr-pink-quartz: #ffd1e0;
+    --nihr-sunshine-yellow: #ffe626;
+    --nihr-blue-flame: #0051c2;
+    --nihr-twilight: #3e439c;
+    --nihr-berry: #804055;
+    --nihr-teal: #0a5766;
+    /*Neutral*/
+    --nihr-putty: #faf4eb;
+    --nihr-steel: #c5dce5;
+    /*Fonts*/
+    --nihr-body-font: "Inclusive Sans", -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Adwaita Sans, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif;
+    --nihr-heading-font: "Archia", "Inclusive Sans", -apple-system, BlinkMacSystemFont, avenir next, avenir, segoe ui, helvetica neue, Adwaita Sans, Cantarell, Ubuntu, roboto, noto, helvetica, arial, sans-serif;
+    --nihr-error-colour: #ca3535;
+    --nihr-success-colour: #0f7a52;
+}
+
+
+.nihr {
+    --govuk-breakpoint-mobile: 20rem;
+    --govuk-breakpoint-tablet: 40.0625rem;
+    --govuk-breakpoint-desktop: 48.0625rem;
+    --govuk-frontend-version: "6.1.0";
+    --govuk-brand-colour: var(--nihr-navy);
+    --govuk-text-colour: var(--nihr-off-black);
+    --govuk-template-background-colour: var(--nihr-navy);
+    --govuk-body-background-colour: var(--nihr-white);
+    --govuk-print-text-colour: #000;
+    --govuk-secondary-text-colour: var(--nihr-teal);
+    --govuk-focus-colour: var(--nihr-sunshine-yellow);
+    --govuk-focus-text-colour: var(--nihr-off-black);
+    --govuk-error-colour: var(--nihr-error-colour);
+    --govuk-success-colour: var(--nihr-success-colour);
+    --govuk-border-colour: var(--nihr-steel);
+    --govuk-input-border-colour: var(--nihr-off-black);
+    --govuk-hover-colour: var(--nihr-steel);
+    --govuk-link-colour: var(--nihr-navy);
+    --govuk-link-visited-colour: lab(from var(--nihr-navy) calc(L + 0) a b );
+    --govuk-link-hover-colour: lab(from var(--nihr-navy) calc(L + 10) a b );
+    --govuk-link-active-colour: var(--nihr-off-black);
+    --govuk-surface-background-colour: var(--nihr-putty);
+    --govuk-surface-text-colour: var(--nihr-off-black);
+    --govuk-surface-border-colour: var(--nihr-steel);
+
+    .nihr-justify-content-centre {
+        display:flex;
+        justify-content: center;
+    }
+
+
+    body:has(> footer) {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        > * {
+            width: 100vw;
+        }
+    }
+
+
+
+    footer {
+        margin-top: auto;
+    }
+
+    .govuk-input::placeholder {
+        color: var(--nihr-navy);
+        font-weight: 700
+    }
+
+    .govuk-input {
+        border-color: var(--nihr-navy);
+        color: var(--nihr-navy);
+        padding: 0.625rem 5rem 0.625rem 2.375rem;
+        height: 2.5em;
+    }
+
+    .govuk-link:hover, .govuk-back-link:hover, .govuk-breadcrumbs__link:hover, .govuk-details__summary:hover .govuk-details__summary-text, .govuk-error-summary__list a:hover, .govuk-footer__link:hover, .govuk-header__homepage-link:hover, .govuk-notification-banner__link:hover, .govuk-pagination__link:active .govuk-pagination__link-label, .govuk-pagination__link:active .govuk-pagination__link-title--decorated, .govuk-pagination__link:hover .govuk-pagination__link-label, .govuk-pagination__link:hover .govuk-pagination__link-title--decorated, .govuk-service-navigation__link:hover, .govuk-tabs__tab:hover {
+        text-decoration-color: var(--nihr-coral);
+    }
+
+    .govuk-button {
+        background-color: var(--nihr-navy);
+    }
+
+    .govuk-button--secondary {
+        background-color: lab(from var(--nihr-putty) calc(L - 5) a b );
+    }
+
+    .govuk-button.govuk-button--secondary:hover {
+        background-color: var(--nihr-putty);
+    }
+
+    .govuk-button:hover {
+        background-color: lab(from var(--nihr-navy) calc(L + 10) a b );
+    }
+
+    .govuk-notification-banner__title {
+        color: var(--nihr-white);
+    }
+
+    .govuk-service-navigation__item, .govuk-service-navigation__service-name {
+        border-color: var(--nihr-coral);
+    }
+
+    .govuk-footer {
+        background-color: var(--nihr-navy);
+    }
+
+    .govuk-footer__link {
+        color: var(--nihr-white);
+    }
+
+        .govuk-footer__link:active, .govuk-footer__link:focus {
+            color: var(--nihr-navy);
+        }
+
+    * {
+        font-family: var(--nihr-body-font);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--nihr-heading-font);
+        color: var(--nihr-navy);
+    }
+
+    .govuk-header__homepage-link:focus .cls-2 {
+        fill: var(--nihr-navy);
+    }
+
+    .govuk-accordion-nav__chevron {
+        border: unset;
+        transition: transform .2s ease;
+    }
+
+
+
+    .govuk-frontend-supported {
+        .govuk-accordion__section-button:focus, .govuk-accordion__show-all:focus, .govuk-accordion__section-button:hover, .govuk-accordion__show-all:hover {
+            .govuk-accordion-nav__chevron {
+                background: unset;
+
+                &:after {
+                    color: var(--govuk-text-colour);
+                }
+            }
+        }
+    }
+
+
+        .govuk-frontend-supported .govuk-accordion__section-button:hover {
+            color: var(--govuk-text-colour);
+            background: unset;
+        }
+
+        .govuk-frontend-supported .govuk-accordion__section-button .govuk-accordion__section-toggle-text {
+            color: var(--govuk-text-colour);
+        }
+
+        .govuk-frontend-supported .govuk-accordion__section-button:hover .govuk-accordion__section-toggle-text,
+        .govuk-frontend-supported .govuk-accordion__show-all:hover .govuk-accordion__show-all-text {
+            text-decoration: underline;
+            text-underline-offset: .1578em;
+            text-decoration-thickness: max(3px,.1875rem,.12em);
+            text-decoration-color: var(--nihr-coral);
+            -webkit-text-decoration-skip-ink: none;
+            text-decoration-skip-ink: none;
+            -webkit-text-decoration-skip: none;
+            text-decoration-skip: none
+        }
+
+
+        .govuk-frontend-supported .govuk-accordion__section-button:hover .govuk-accordion-nav__chevron {
+            color: var(--govuk-text-colour);
+            background: unset;
+        }
+
+            .govuk-frontend-supported .govuk-accordion__section-button:hover .govuk-accordion-nav__chevron:after {
+                color: var(--nihr-coral);
+            }
+
+        .govuk-frontend-supported .govuk-accordion-nav__chevron:after {
+            width: .575rem;
+            height: 0.575rem;
+        }
+
+    .govuk-footer__meta {
+        align-items: flex-start;
+    }
+}
+
+
