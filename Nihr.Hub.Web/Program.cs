@@ -6,6 +6,7 @@ using Nihr.Hub.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Repositories;
 using Nihr.Hub.Infrastructure.Services;
 using Nihr.Hub.Infrastructure.Settings;
+using Nihr.Hub.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,24 +17,38 @@ builder.AddNihrConfiguration();
 builder.ConfigureNihrLogging();
 
 builder.Services.AddAuthentication(options =>
-    {
-        options.DefaultScheme = "Cookies";
-        options.DefaultChallengeScheme = "Google";
-    })
-    .AddCookie("Cookies") // Use cookies for session tracking
-    .AddGoogle("Google", options =>
-    {
-        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
-                           throw new InvalidOperationException("ClientId is missing");
-        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ??
-                               throw new InvalidOperationException("ClientSecret is missing");
+{
+    options.DefaultScheme = "Cookies";
+    options.DefaultChallengeScheme = "Google";
+})
+.AddCookie("Cookies") // Use cookies for session tracking
+.AddGoogle("Google", options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
+                       throw new InvalidOperationException("ClientId is missing");
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ??
+                           throw new InvalidOperationException("ClientSecret is missing");
 
-        options.Events.OnRedirectToAuthorizationEndpoint = context =>
-        {
-            context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
-            return Task.CompletedTask;
-        };
-    });
+    options.Events.OnRedirectToAuthorizationEndpoint = context =>
+    {
+        context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
+        return Task.CompletedTask;
+    };
+});
+
+if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeAuthentication:Enabled"))
+{
+    builder.Services.AddAuthentication(nameof(DevelopmentModeAuthenticationHandler))
+        .AddScheme<DevelopmentModeAuthenticationOptions, DevelopmentModeAuthenticationHandler>(
+            nameof(DevelopmentModeAuthenticationHandler),
+            options =>
+            {
+                options.Name = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Name");
+                options.GivenName = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:GivenName");
+                options.Email = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Email");
+            }
+        );
+}
 
 builder.Services.AddOptions<AupSettings>()
     .Bind(builder.Configuration.GetSection("AUP"))
@@ -56,6 +71,14 @@ builder.Services.AddOptions<GoogleAnalyticsSettings>()
     .ValidateDataAnnotations();
 
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
+
+if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
+{
+    builder.Services.AddOptions<DevelopmentModeUserRepositorySettings>()
+        .Bind(builder.Configuration.GetSection("DevelopmentModeUserRepository"))
+        .ValidateDataAnnotations();
+    builder.Services.AddTransient<IUserRepository, NullUserRepository>();
+}
 
 builder.Services.AddSingleton(sp =>
 {
