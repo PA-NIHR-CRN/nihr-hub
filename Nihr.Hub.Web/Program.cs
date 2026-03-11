@@ -43,9 +43,9 @@ if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>(
             nameof(DevelopmentModeAuthenticationHandler),
             options =>
             {
-                options.Name = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Name");
-                options.GivenName = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:GivenName");
-                options.Email = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Email");
+                options.Name = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Name") ?? string.Empty;
+                options.GivenName = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:GivenName") ?? string.Empty;
+                options.Email = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Email") ?? string.Empty;
             }
         );
 }

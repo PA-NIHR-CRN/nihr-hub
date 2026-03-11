@@ -6,10 +6,10 @@ internal class NullUserRepository(IOptionsSnapshot<DevelopmentModeUserRepository
 {
     public Task<User?> GetUser(string email, CancellationToken cancellationToken)
     {
-        return Task.FromResult(new User
+        return Task.FromResult<User?>(new User
         {
             Email = email,
-            AupAcceptedVersion = options.Value.AupAcceptedVersion,
+            AupAcceptedVersion = options.Value.AupAcceptedVersion ?? string.Empty,
             AupAcceptedDate = options.Value.AupAcceptedDate?.ToString("o") ?? string.Empty
         }
         );

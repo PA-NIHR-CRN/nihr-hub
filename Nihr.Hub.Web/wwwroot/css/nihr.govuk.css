@@ -1,28 +1,4 @@
-﻿/*@font-face {
-    font-family: "Archia";
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.eot");
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-regular-webfont.ttf") format("truetype");
-    font-weight: 400;
-    font-style: normal
-}
-
-@font-face {
-    font-family: "Archia";
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.eot");
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-semibold-webfont.ttf") format("truetype");
-    font-weight: 600;
-    font-style: normal
-}
-
-@font-face {
-    font-family: "Archia";
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.eot");
-    src: url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.eot#iefix") format("embedded-opentype"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.woff2") format("woff2"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.woff") format("woff"),url("https://www.nihr.ac.uk/themes/custom/nihr/dist/webfonts/archia-bold-webfont.ttf") format("truetype");
-    font-weight: 700;
-    font-style: normal
-}*/
-
-/*@import url('https://fonts.cdnfonts.com/css/archia');*/
+﻿/* NIHR branded reskin of GOVUK frontend */
 
 :root {
     /*Primary*/
@@ -117,11 +93,6 @@
 
 
 .nihr {
-    /*    --govuk-breakpoint-mobile: 20rem;
-    --govuk-breakpoint-tablet: 40.0625rem;
-    --govuk-breakpoint-desktop: 48.0625rem;
-    --govuk-frontend-version: "6.1.0";
-    --govuk-print-text-colour: #000;*/
     --govuk-brand-colour: var(--nihr-navy);
     --govuk-text-colour: var(--nihr-off-black);
     --govuk-template-background-colour: var(--nihr-navy);
