@@ -43,9 +43,9 @@
             Favourite applications
         </h2>
         <p id="favourites-caption" class="govuk-body">
-            Drag application icons into this section to favourite them
+            Drag application icons into this section to favourite them.
         </p>
-        <div class="card">
+        <div class="card card__border-steel">
             <div id="favourites-list" class="icon-container content">
                 @foreach (var application in Model.Favourites)
                 {
@@ -65,7 +65,7 @@
             All applications
         </h2>
         <p class="govuk-body">For more information on the applications provided as part of the Hub and any specific usage constraints, please visit our <a asp-action="Help" class="govuk-link">applications overview</a> page.</p>
-        <div class="card">
+        <div class="card card__border-steel">
             <div id="all-applications" class="icon-container content">
                 @foreach (var application in Model.AllApplications)
                 {

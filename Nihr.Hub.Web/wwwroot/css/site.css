@@ -3,10 +3,14 @@
 }
 
 .card {
-    background-color: lab(from var(--nihr-steel) calc(L + 20) a b );
+    background-color: var(--nihr-white);
     border: 0.0625rem solid var(--govuk-surface-border-colour);
     box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15);
 }
+
+    .card.card__border-steel {
+        box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15), inset 0px 0px 0px 0.5rem var(--nihr-steel)
+    }
 
 .content {
     position: relative;
@@ -84,7 +88,7 @@
 }
 
 
-.hero-container .govuk-grid-row{
+.hero-container .govuk-grid-row {
     margin-bottom: 2em;
 }
 
