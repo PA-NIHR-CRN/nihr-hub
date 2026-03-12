@@ -9,7 +9,7 @@
 }
 
     .card.card__border-steel {
-        box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15), inset 0px 0px 0px 0.5rem var(--nihr-steel)
+        box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15), inset 0px 0px 0px 1px var(--nihr-steel)
     }
 
 .content {
