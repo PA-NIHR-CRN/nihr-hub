@@ -59,9 +59,6 @@
     background-color: #fd0;
 }
 
-body:not(.js-enabled) #favourites-caption {
-    display: none;
-}
 
 .card {
     box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15);
