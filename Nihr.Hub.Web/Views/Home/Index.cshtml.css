@@ -1,40 +1,10 @@
-.govuk-heading-l {
-    text-align: center;
-}
-
-.news-link {
-    text-decoration: none;
-    font-weight: 700;
-    text-wrap: nowrap;
-}
-
-.news-link:hover {
-    text-decoration: underline;
-    outline: 0;
-    text-decoration-color: var(--nihr-red);
-    text-decoration-thickness: 0.1875rem;
-    text-underline-offset: 5px;
-}
-
-.hero-container {
-    display: flex;
-    align-items: center; /* Vertically align items */
-    gap: 1rem; /* Add spacing between the anchor and the input */
-    justify-content: center;
-    flex-wrap: wrap;
-}
 
 .govuk-form-group {
     flex: 0 1 50%;
 }
 
 .govuk-input {
-    padding-left: 15px;
-    padding-right: 30px;
     border-radius: 50px;
-    height: 50px;
-    min-width: 300px;
-    width: 100%;
 }
 
 .search-wrapper {
@@ -45,7 +15,7 @@
 
 .search-button {
     position: absolute; /* Position the button inside the wrapper */
-    right: 0.5rem; /* Add some spacing from the edge */
+    right: 2.125rem; /* Add some spacing from the edge */
     top: 50%; /* Center vertically */
     transform: translateY(-50%); /* Align button in the middle of the input */
     width: 2.5rem; /* Set button size */
@@ -59,17 +29,14 @@
     border-radius: 50%;
 }
 
-.search-button:focus {
-    background-color: #fd0;
-}
-
-body:not(.js-enabled) #favourites-caption {
-    display: none;
-}
+    .search-button:focus {
+        background-color: var(--govuk-focus-colour      );
+    }
+    .search-button:active {
+        background-color: var(--govuk-focus-colour);
+    }
 
 .card {
-    box-shadow: 0 0.1875rem 0.5rem 0 rgba(0, 0, 0, .15);
-    border: 0.0625rem solid rgba(0, 0, 0, 0);
     min-height: 100px;
 }
 

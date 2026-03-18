@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   id="NIHR_Core_logo"
+   data-name="NIHR Core logo"
+   viewBox="0 0 150 455"
+   height="150"
+   version="1.1"
+   width="150"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata23">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs3">
+    <style
+       id="style5">
+                                    .cls-1 {
+                                        fill: #fc5d5d;
+                                    }
+
+                                    .cls-2 {
+                                        fill: #fff;
+                                    }
+
+.background{
+fill: #1c285e;
+}
+                                </style>
+  </defs>
+  <rect
+     class="background"
+     width="454.54544"
+     height="454.54544"
+     id="rect7"
+     x="-152.27272"
+     y="0.22727966"
+     style="fill:#1c285e" />
+  <g
+     id="g4727"
+     transform="matrix(0.99099002,0,0,0.99099002,-112.59441,177.94554)">
+    <rect
+       id="rect9"
+       height="100"
+       width="9"
+       x="369.60001"
+       class="cls-1"
+       y="0"
+       style="fill:#fc5d5d" />
+    <g
+       id="g11">
+      <path
+         id="path13"
+         d="m 96.96,80.57 h 13.43 V 19.43 H 96.96 V 0 h 48.43 v 19.43 h -13.71 v 61.14 h 13.71 V 100 H 96.96 Z"
+         class="cls-2"
+         style="fill:#ffffff" />
+      <path
+         id="path15"
+         d="m 160.49,0 h 21.29 v 39.29 h 38 V 0 h 21.14 V 100 H 219.78 V 59.29 h -38 V 100 h -21.29 z"
+         class="cls-2"
+         style="fill:#ffffff" />
+      <path
+         id="path17"
+         d="m 257.89,0 h 40.93 c 21,0 35.71,12.57 35.71,31.29 0,13.43 -6.29,23.86 -17.86,29.29 l 21.86,39.43 H 314.24 L 295.81,63.87 h -16.64 v 36.14 H 257.88 V 0 Z m 41.21,44.57 c 7.71,0 13.29,-4.57 13.29,-12.86 0,-6.43 -4.43,-11.86 -14,-11.86 h -19.21 v 24.71 h 19.93 z"
+         class="cls-2"
+         style="fill:#ffffff" />
+      <path
+         id="path19"
+         d="M 0,100 V 0 H 21.15 L 60.54,61.17 V 0 H 81.87 V 100 H 63.4 L 21.15,36.94 V 100 Z"
+         class="cls-2"
+         style="fill:#ffffff" />
+    </g>
+  </g>
+</svg>
