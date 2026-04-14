@@ -7,6 +7,7 @@ using Nihr.Hub.Infrastructure.Repositories;
 using Nihr.Hub.Infrastructure.Services;
 using Nihr.Hub.Infrastructure.Settings;
 using Nihr.Hub.Web;
+using Google.Apis.Licensing.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -91,7 +92,6 @@ builder.Services.AddSingleton(sp =>
         .CreateWithUser(adminToImpersonate);
 });
 
-// 2. Register the DirectoryService as a singleton, using the credential
 builder.Services.AddSingleton(sp =>
 {
     var credential = sp.GetRequiredService<GoogleCredential>();
@@ -102,6 +102,18 @@ builder.Services.AddSingleton(sp =>
         ApplicationName = "NIHR Hub",
     });
 });
+
+builder.Services.AddSingleton(sp =>
+{
+    var credential = sp.GetRequiredService<GoogleCredential>();
+
+    return new LicensingService(new BaseClientService.Initializer()
+    {
+        HttpClientInitializer = credential,
+        ApplicationName = "NIHR Hub",
+    });
+});
+
 
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
@@ -120,6 +132,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

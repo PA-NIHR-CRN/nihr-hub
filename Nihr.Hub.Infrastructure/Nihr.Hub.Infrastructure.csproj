@@ -7,12 +7,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Nihr.Hub.Domain\Nihr.Hub.Domain.csproj" />
+      <ProjectReference Include="..\Nihr.Hub.Domain\Nihr.Hub.Domain.csproj">
+        <ReferenceSourceTarget></ReferenceSourceTarget>
+      </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="AWSSDK.SSOOIDC" Version="3.7.400.86" />
       <PackageReference Include="Google.Apis.Admin.Directory.directory_v1" Version="1.71.0.3925" />
+      <PackageReference Include="Google.Apis.Licensing.v1" Version="1.72.0.3964" />
       <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.1" />
       <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.1" />
     </ItemGroup>
