@@ -71,6 +71,11 @@ builder.Services.AddOptions<GoogleAnalyticsSettings>()
     .Bind(builder.Configuration.GetSection("GoogleAnalytics"))
     .ValidateDataAnnotations();
 
+builder.Services
+    .AddOptions<GoogleAdminSettings>()
+    .BindConfiguration("GoogleAdmin")
+    .ValidateDataAnnotations();
+
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
 if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
