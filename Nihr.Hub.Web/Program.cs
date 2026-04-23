@@ -78,23 +78,39 @@ builder.Services
 
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
-if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
+builder.Services
+    .AddOptions<DevelopmentModeUserRepositorySettings>()
+    .BindConfiguration("DevelopmentModeUserRepository")
+    .ValidateDataAnnotations();
+
+if (builder.Environment.IsDevelopment())
 {
-    builder.Services.AddOptions<DevelopmentModeUserRepositorySettings>()
-        .Bind(builder.Configuration.GetSection("DevelopmentModeUserRepository"))
-        .ValidateDataAnnotations();
-    builder.Services.AddTransient<IUserRepository, NullUserRepository>();
+    var devRepoSettings = builder.Configuration
+        .GetSection("DevelopmentModeUserRepository")
+        .Get<DevelopmentModeUserRepositorySettings>();
+
+    if (devRepoSettings?.Enabled == true)
+    {
+        builder.Services.AddTransient<IUserRepository, NullUserRepository>();
+    }
 }
 
-builder.Services.AddSingleton(sp =>
+builder.Services.AddSingleton<GoogleCredential>(sp =>
 {
-    var config = sp.GetRequiredService<IOptions<GoogleAdminSettings>>();
-    var googleKeyJson = config.Value.KeyJson;
-    var adminToImpersonate = config.Value.AdminToImpersonate;
+    var logger = sp.GetRequiredService<ILogger<GoogleAdminService>>();
+    var settings = sp.GetRequiredService<IOptions<GoogleAdminSettings>>().Value;
 
-    return GoogleCredential.FromJson(googleKeyJson)
-        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
-        .CreateWithUser(adminToImpersonate);
+    try
+    {
+        return GoogleCredential.FromJson(settings.KeyJson)
+            .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
+            .CreateWithUser(settings.AdminToImpersonate);
+    }
+    catch (Exception ex)
+    {
+        logger.LogCritical(ex, "Failed to create GoogleCredential");
+        throw;
+    }
 });
 
 builder.Services.AddSingleton(sp =>
