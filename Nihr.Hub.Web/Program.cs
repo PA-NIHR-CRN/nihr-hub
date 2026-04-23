@@ -1,5 +1,6 @@
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Licensing.v1;
 using Google.Apis.Services;
 using Microsoft.Extensions.Options;
 using Nihr.Hub.Infrastructure.Interfaces;
@@ -7,7 +8,6 @@ using Nihr.Hub.Infrastructure.Repositories;
 using Nihr.Hub.Infrastructure.Services;
 using Nihr.Hub.Infrastructure.Settings;
 using Nihr.Hub.Web;
-using Google.Apis.Licensing.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,48 +71,29 @@ builder.Services.AddOptions<GoogleAnalyticsSettings>()
     .Bind(builder.Configuration.GetSection("GoogleAnalytics"))
     .ValidateDataAnnotations();
 
-builder.Services
-    .AddOptions<GoogleAdminSettings>()
-    .BindConfiguration("GoogleAdmin")
-    .ValidateDataAnnotations();
-
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
-builder.Services
-    .AddOptions<DevelopmentModeUserRepositorySettings>()
-    .BindConfiguration("DevelopmentModeUserRepository")
-    .ValidateDataAnnotations();
-
-if (builder.Environment.IsDevelopment())
+if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
 {
-    var devRepoSettings = builder.Configuration
-        .GetSection("DevelopmentModeUserRepository")
-        .Get<DevelopmentModeUserRepositorySettings>();
-
-    if (devRepoSettings?.Enabled == true)
-    {
-        builder.Services.AddTransient<IUserRepository, NullUserRepository>();
-    }
+    builder.Services.AddOptions<DevelopmentModeUserRepositorySettings>()
+        .Bind(builder.Configuration.GetSection("DevelopmentModeUserRepository"))
+        .ValidateDataAnnotations();
+    builder.Services.AddTransient<IUserRepository, NullUserRepository>();
 }
 
-builder.Services.AddSingleton<GoogleCredential>(sp =>
+builder.Services.AddSingleton(sp =>
 {
-    var logger = sp.GetRequiredService<ILogger<GoogleAdminService>>();
-    var settings = sp.GetRequiredService<IOptions<GoogleAdminSettings>>().Value;
+    var config = sp.GetRequiredService<IOptions<GoogleAdminSettings>>();
+    var googleKeyJson = config.Value.KeyJson;
+    var adminToImpersonate = config.Value.AdminToImpersonate;
 
-    try
-    {
-        return GoogleCredential.FromJson(settings.KeyJson)
-            .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
-            .CreateWithUser(settings.AdminToImpersonate);
-    }
-    catch (Exception ex)
-    {
-        logger.LogCritical(ex, "Failed to create GoogleCredential");
-        throw;
-    }
+    return CredentialFactory.FromJson<ServiceAccountCredential>(googleKeyJson)
+        .ToGoogleCredential()
+        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly, LicensingService.Scope.AppsLicensing)
+        .CreateWithUser(adminToImpersonate);
 });
 
+// 2. Register the DirectoryService as a singleton, using the credential
 builder.Services.AddSingleton(sp =>
 {
     var credential = sp.GetRequiredService<GoogleCredential>();
@@ -135,7 +116,6 @@ builder.Services.AddSingleton(sp =>
     });
 });
 
-
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
 builder.Services.AddHealthChecks();
@@ -153,7 +133,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
