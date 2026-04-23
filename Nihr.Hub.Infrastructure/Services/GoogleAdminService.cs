@@ -2,19 +2,20 @@ using System.Net;
 using Google;
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Licensing.v1;
+using Microsoft.Extensions.Options;
 using Nihr.Hub.Infrastructure.Interfaces;
+using Nihr.Hub.Infrastructure.Settings;
 
 namespace Nihr.Hub.Infrastructure.Services;
 
 public class GoogleAdminService(
     DirectoryService directoryService,
-    LicensingService licensingService
+    LicensingService licensingService,
+    IOptions<GoogleAdminSettings> googleAdminSettings
 ) : IGoogleAdminService
 {
-    private const string ProductId = "Google-Apps";
-    private const string EnterpriseStandardSkuId = "1010020026";
-    private const string EnterprisePlusSkuId = "1010020027";
-
+    private readonly GoogleAdminSettings _googleAdminSettings = googleAdminSettings.Value;
+    
     public async Task<string> GetGoogleUserOuAsync(string userEmail)
     {
         var user = await directoryService.Users.Get(userEmail).ExecuteAsync();
@@ -23,8 +24,15 @@ public class GoogleAdminService(
 
     public async Task<bool> HasEnterpriseLicenseAsync(string userEmail)
     {
-        return await HasSkuAsync(EnterpriseStandardSkuId, userEmail)
-            || await HasSkuAsync(EnterprisePlusSkuId, userEmail);
+        foreach (var skuId in _googleAdminSettings.EnterpriseSkuIds)
+        {
+            if (await HasSkuAsync(skuId, userEmail))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private async Task<bool> HasSkuAsync(string skuId, string userEmail)
@@ -32,7 +40,7 @@ public class GoogleAdminService(
         try
         {
             await licensingService.LicenseAssignments.Get(
-                productId: ProductId,
+                productId: _googleAdminSettings.ProductId,
                 skuId: skuId,
                 userId: userEmail
             ).ExecuteAsync();

@@ -87,7 +87,7 @@ builder.Services.AddSingleton(sp =>
     var googleKeyJson = config.Value.KeyJson;
     var adminToImpersonate = config.Value.AdminToImpersonate;
 
-    return GoogleCredential.FromJson(googleKeyJson)
+    return CredentialFactory.FromJson<GoogleCredential>(googleKeyJson)
         .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
         .CreateWithUser(adminToImpersonate);
 });
