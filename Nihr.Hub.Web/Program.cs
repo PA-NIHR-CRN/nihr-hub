@@ -1,5 +1,6 @@
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Licensing.v1;
 using Google.Apis.Services;
 using Microsoft.Extensions.Options;
 using Nihr.Hub.Infrastructure.Interfaces;
@@ -7,7 +8,6 @@ using Nihr.Hub.Infrastructure.Repositories;
 using Nihr.Hub.Infrastructure.Services;
 using Nihr.Hub.Infrastructure.Settings;
 using Nihr.Hub.Web;
-using Google.Apis.Licensing.v1;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -87,11 +87,13 @@ builder.Services.AddSingleton(sp =>
     var googleKeyJson = config.Value.KeyJson;
     var adminToImpersonate = config.Value.AdminToImpersonate;
 
-    return CredentialFactory.FromJson<GoogleCredential>(googleKeyJson)
-        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
+    return CredentialFactory.FromJson<ServiceAccountCredential>(googleKeyJson)
+        .ToGoogleCredential()
+        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly, LicensingService.Scope.AppsLicensing)
         .CreateWithUser(adminToImpersonate);
 });
 
+// 2. Register the DirectoryService as a singleton, using the credential
 builder.Services.AddSingleton(sp =>
 {
     var credential = sp.GetRequiredService<GoogleCredential>();
@@ -114,7 +116,6 @@ builder.Services.AddSingleton(sp =>
     });
 });
 
-
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
 builder.Services.AddHealthChecks();
@@ -132,7 +133,6 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseRouting();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

@@ -14,4 +14,5 @@ public class HubApplication
     [Required] public required string ImageName { get; set; }
     [Required] public required string Url { get; set; }
     public List<string>? AllowedOperatingUnits { get; set; }
+    public bool RequiresEnterpriseLicense { get; set; }
 }
