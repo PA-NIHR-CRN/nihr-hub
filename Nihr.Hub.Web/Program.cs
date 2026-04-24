@@ -1,5 +1,6 @@
 using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Auth.OAuth2;
+using Google.Apis.Licensing.v1;
 using Google.Apis.Services;
 using Microsoft.Extensions.Options;
 using Nihr.Hub.Infrastructure.Interfaces;
@@ -86,8 +87,9 @@ builder.Services.AddSingleton(sp =>
     var googleKeyJson = config.Value.KeyJson;
     var adminToImpersonate = config.Value.AdminToImpersonate;
 
-    return GoogleCredential.FromJson(googleKeyJson)
-        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly)
+    return CredentialFactory.FromJson<ServiceAccountCredential>(googleKeyJson)
+        .ToGoogleCredential()
+        .CreateScoped(DirectoryService.Scope.AdminDirectoryUserReadonly, LicensingService.Scope.AppsLicensing)
         .CreateWithUser(adminToImpersonate);
 });
 
@@ -97,6 +99,17 @@ builder.Services.AddSingleton(sp =>
     var credential = sp.GetRequiredService<GoogleCredential>();
 
     return new DirectoryService(new BaseClientService.Initializer()
+    {
+        HttpClientInitializer = credential,
+        ApplicationName = "NIHR Hub",
+    });
+});
+
+builder.Services.AddSingleton(sp =>
+{
+    var credential = sp.GetRequiredService<GoogleCredential>();
+
+    return new LicensingService(new BaseClientService.Initializer()
     {
         HttpClientInitializer = credential,
         ApplicationName = "NIHR Hub",

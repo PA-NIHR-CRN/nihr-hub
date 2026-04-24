@@ -1,6 +1,4 @@
 using System.Diagnostics;
-using System.Security.Claims;
-using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
@@ -66,16 +64,22 @@ public class HomeController(
         List<HubApplication> favouriteApps;
         var ou = googleAdminService.GetGoogleUserOuAsync(email).Result;
 
+        var userHasEnterpriseLicense = await googleAdminService.HasEnterpriseLicenseAsync(email);
+
+        var visibleApps = hubApplicationOptions.Value.Applications
+            .Where(app => app.CanUserSee(ou, userHasEnterpriseLicense))
+            .ToList();
+
         if (user.Favourites.Count == 0)
         {
-            favouriteApps = hubApplicationOptions.Value.Applications.Where(app => DefaultApps.Contains(app.Id))
+            favouriteApps = visibleApps
+                .Where(app => DefaultApps.Contains(app.Id))
                 .ToList();
         }
         else
         {
-            favouriteApps = hubApplicationOptions.Value.Applications.Where(app =>
-                    user.Favourites.Contains(app.Id) &&
-                    (app.AllowedOperatingUnits == null || app.AllowedOperatingUnits.Contains(ou)))
+            favouriteApps = visibleApps
+                .Where(app => user.Favourites.Contains(app.Id))
                 .OrderBy(app => user.Favourites.IndexOf(app.Id))
                 .ToList();
         }
@@ -83,9 +87,8 @@ public class HomeController(
         return View(new HomeModel
         {
             FullName = fullName, GivenName = givenName, Email = email,
-            AllApplications = hubApplicationOptions.Value.Applications.Where(app =>
-                    !favouriteApps.Contains(app) &&
-                    (app.AllowedOperatingUnits == null || app.AllowedOperatingUnits.Contains(ou)))
+            AllApplications = visibleApps
+                .Where(app => !favouriteApps.Contains(app))
                 .ToList(),
             Favourites = favouriteApps
         });
