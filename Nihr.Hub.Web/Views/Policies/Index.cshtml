@@ -1,0 +1,38 @@
+@model Nihr.Hub.Web.Models.PoliciesContent
+@using Nihr.Hub.Web.Helpers
+
+@{
+  ViewData["Title"] = "Policies";
+}
+
+@Html.GovUkBreadcrumbs(
+  [
+    new BreadcrumbItem { Text = "Home", Url = Url.Action("Index", "Home")! },
+    new BreadcrumbItem { Text = "Policies", Url = Url.Action("Index", "Policies")! }
+  ]
+)
+
+<div class="govuk-grid-row govuk-!-margin-top-4">
+  <div class="govuk-grid-column-full">
+    <h1 class="govuk-heading-l">IT Policies</h1>
+    <p class="govuk-body">
+      The following policies apply to all NIHR staff using centrally-provided IT systems and services.
+      Please review these documents and ensure you understand your responsibilities.
+    </p>
+
+    <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+    @foreach (var policy in Model.Policies)
+    {
+      <div class="govuk-!-margin-bottom-6">
+        <h2 class="govuk-heading-m">
+          <a class="govuk-link" href="@policy.Url" target="_blank" rel="noopener noreferrer">
+            @policy.Title
+          </a>
+        </h2>
+        <p class="govuk-body">@policy.Description</p>
+      </div>
+      <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+    }
+  </div>
+</div>
