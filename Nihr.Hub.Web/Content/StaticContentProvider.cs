@@ -6,24 +6,13 @@ using Nihr.Hub.Web.Models;
 namespace Nihr.Hub.Web.Content;
 
 /// <summary>
-/// Hard-coded content provider seam. Replace this registration with a CMS-backed
-/// implementation when content management is introduced.
+/// Config-backed content provider seam. Replace this registration with a CMS-backed
+/// implementation when content management is introduced (per ADR-0001).
 /// </summary>
-public class StaticContentProvider(IOptions<BannerSettings> bannerOptions) : IContentProvider
+public class StaticContentProvider(
+    IOptions<PoliciesSettings> policiesOptions,
+    IOptions<BannerSettings> bannerOptions) : IContentProvider
 {
-    private static readonly PoliciesContent PoliciesContent = new()
-    {
-        Policies =
-        [
-            new PolicyEntry
-            {
-                Title = "IT Policies",
-                Url = "https://sites.google.com/nihr.ac.uk/nihr-induction-and-materials/it-support-and-policies/it-policies",
-                Description = "NIHR IT policies covering acceptable use, data handling, and information security requirements for all staff."
-            }
-        ]
-    };
-
     public Task<TContent> GetContentAsync<TContent>(string contentId, CancellationToken cancellationToken = default)
         where TContent : new()
     {
@@ -41,9 +30,9 @@ public class StaticContentProvider(IOptions<BannerSettings> bannerOptions) : ICo
     {
         object? content = contentId switch
         {
-            ContentIds.Policies => PoliciesContent,
+            ContentIds.Policies => BuildPoliciesContent(),
             ContentIds.Banner => new BannerContent { Message = bannerOptions.Value.Message },
-            _ => throw new InvalidOperationException($"No static content registered for content ID '{contentId}'.")
+            _ => throw new InvalidOperationException($"No content registered for content ID '{contentId}'.")
         };
 
         if (content is TContent typed)
@@ -52,6 +41,17 @@ public class StaticContentProvider(IOptions<BannerSettings> bannerOptions) : ICo
         throw new InvalidCastException(
             $"Content for '{contentId}' is of type '{content.GetType().Name}', not '{typeof(TContent).Name}'.");
     }
+    private PoliciesContent BuildPoliciesContent() => new()
+    {
+        Policies = policiesOptions.Value.Items
+            .Select(i => new PolicyEntry
+            {
+                Title = i.PolicyName,
+                Url = i.PolicyUrl,
+                Description = i.PolicyDescription
+            })
+            .ToList()
+    };
 }
 
 public static class ContentIds

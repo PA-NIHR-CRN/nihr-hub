@@ -24,7 +24,10 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = "Cookies";
     options.DefaultChallengeScheme = "Google";
 })
-.AddCookie("Cookies") // Use cookies for session tracking
+.AddCookie("Cookies", options =>
+{
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+}) // Use cookies for session tracking
 .AddGoogle("Google", options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
@@ -122,6 +125,10 @@ builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
 builder.Services.AddOptions<BannerSettings>()
     .Bind(builder.Configuration.GetSection("Banner"))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptions<PoliciesSettings>()
+    .Bind(builder.Configuration.GetSection("Policies"))
     .ValidateDataAnnotations();
 
 builder.Services.AddTransient<IContentProvider, StaticContentProvider>();
