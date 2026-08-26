@@ -3,11 +3,13 @@ using Google.Apis.Auth.OAuth2;
 using Google.Apis.Licensing.v1;
 using Google.Apis.Services;
 using Microsoft.Extensions.Options;
+using NIHR.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Repositories;
 using Nihr.Hub.Infrastructure.Services;
 using Nihr.Hub.Infrastructure.Settings;
 using Nihr.Hub.Web;
+using Nihr.Hub.Web.Content;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -117,6 +119,8 @@ builder.Services.AddSingleton(sp =>
 });
 
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
+
+builder.Services.AddTransient<IContentProvider, StaticContentProvider>();
 
 builder.Services.AddHealthChecks();
 
