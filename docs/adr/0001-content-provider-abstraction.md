@@ -11,11 +11,13 @@ Chris O'Neill confirmed on 25 Aug 2026: hard-coding is acceptable for the sprint
 
 ## Decision
 
-All content that is expected to eventually be CMS-managed is delivered through `IContentProvider` from the NIHR SDK (`NIHR.Infrastructure.Interfaces`). A static implementation is provided for the initial release, returning hard-coded values. The interface is registered in DI so a CMS-backed implementation can be swapped in later without changing views or controllers.
+All content that is expected to eventually be CMS-managed is delivered through `IContentProvider` from the NIHR SDK (`NIHR.Infrastructure.Interfaces`). A `StaticContentProvider` implementation is registered for the initial release. The interface is registered in DI so a CMS-backed implementation can be swapped in later without changing views or controllers.
 
-**Content** (delivered via `IContentProvider`): policy entry descriptions and titles, banner message text.
+**Content** (delivered via `IContentProvider`): policy entry titles, descriptions and URLs; banner message text.
 
 **Configuration** (delivered via `IConfiguration`/`appsettings`): banner enabled/disabled toggle, application URLs, environment-specific settings. Configuration is not routed through `IContentProvider`.
+
+**Interim pragmatism:** Until a CMS is introduced, the `StaticContentProvider` reads content values from `appsettings` (via `IOptions<PoliciesSettings>` and `IOptions<BannerSettings>`) rather than hard-coding them. This means content is temporarily stored in config rather than a content store, but it remains behind the `IContentProvider` seam so the CMS swap remains a single-registration change. All content keys (`PolicyName`, `PolicyDescription`, `PolicyUrl`, `Banner:Message`) are present in `appsettings.json` as a committed template; actual values are set in `appsettings.user.json` locally and via environment-specific config in deployed environments.
 
 Reference implementation in the NIHR SDK:
 - Interface: https://github.com/PA-NIHR-CRN/nihr-sdk/blob/main/NIHR.Infrastructure/Interfaces/IContentProvider.cs
