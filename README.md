@@ -41,6 +41,13 @@ The **NIHR Hub** is a .NET MVC application providing a landing page for NIHR col
 ### Environment Configuration
 - In local development, configuration is managed via `appsettings.user.json`.
 - In deployed environments, secrets (such as database connections and API keys) are retrieved from AWS Secrets Manager.
+- When debugging locally, set the following environment variables to ensure the application uses your local AWS SSO configuration correctly:
+
+  | Variable | Example value | Purpose |
+  |---|---|---|
+  | `ASPNETCORE_ENVIRONMENT` | `Development` | Enables development-mode middleware and configuration |
+  | `AWS_PROFILE` | `your-sso-profile-name` | Selects the AWS SSO profile from your local `~/.aws/config` |
+  | `AWS_REGION` | `eu-west-2` | Specifies the AWS region for SDK calls (e.g. Secrets Manager, DynamoDB) |
 
 ## Important Notes
 ### Acceptable Use Policy (AUP) Version Management
