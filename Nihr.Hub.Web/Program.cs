@@ -123,6 +123,10 @@ builder.Services.AddSingleton(sp =>
 
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
+builder.Services.AddOptions<BannerSettings>()
+    .Bind(builder.Configuration.GetSection("Banner"))
+    .ValidateDataAnnotations();
+
 builder.Services.AddOptions<PoliciesSettings>()
     .Bind(builder.Configuration.GetSection("Policies"))
     .ValidateDataAnnotations();

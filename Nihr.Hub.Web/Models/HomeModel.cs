@@ -11,4 +11,7 @@ public class HomeModel
 
     public IList<HubApplication> Favourites { get; init; } = new List<HubApplication>();
     public IList<HubApplication> AllApplications { get; init; } = new List<HubApplication>();
+
+    public bool BannerEnabled { get; init; }
+    public string? BannerMessage { get; init; }
 }

@@ -9,7 +9,9 @@ namespace Nihr.Hub.Web.Content;
 /// Config-backed content provider seam. Replace this registration with a CMS-backed
 /// implementation when content management is introduced (per ADR-0001).
 /// </summary>
-public class StaticContentProvider(IOptions<PoliciesSettings> policiesOptions) : IContentProvider
+public class StaticContentProvider(
+    IOptions<PoliciesSettings> policiesOptions,
+    IOptions<BannerSettings> bannerOptions) : IContentProvider
 {
     public Task<TContent> GetContentAsync<TContent>(string contentId, CancellationToken cancellationToken = default)
         where TContent : new()
@@ -29,6 +31,7 @@ public class StaticContentProvider(IOptions<PoliciesSettings> policiesOptions) :
         object? content = contentId switch
         {
             ContentIds.Policies => BuildPoliciesContent(),
+            ContentIds.Banner => new BannerContent { Message = bannerOptions.Value.Message },
             _ => throw new InvalidOperationException($"No content registered for content ID '{contentId}'.")
         };
 
@@ -38,7 +41,6 @@ public class StaticContentProvider(IOptions<PoliciesSettings> policiesOptions) :
         throw new InvalidCastException(
             $"Content for '{contentId}' is of type '{content.GetType().Name}', not '{typeof(TContent).Name}'.");
     }
-
     private PoliciesContent BuildPoliciesContent() => new()
     {
         Policies = policiesOptions.Value.Items
