@@ -61,7 +61,8 @@ public class CookiesController : Controller
             {
                 Expires = DateTimeOffset.UtcNow.AddYears(1),
                 IsEssential = true,
-                SameSite = SameSiteMode.Lax
+                SameSite = SameSiteMode.Lax,
+                Secure = true
             }
         );
     }
