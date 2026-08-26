@@ -4,6 +4,8 @@
     ViewData["Title"] = "Home Page";
 }
 
+@await Html.PartialAsync("Partials/_Banner", Model)
+
 <div class="hero-container">
     <h1 class="govuk-heading-l govuk-!-text-align-centre">Welcome to the NIHR Hub, <b>@Model.GivenName</b></h1>
     <div class="govuk-grid-row">

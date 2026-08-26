@@ -4,9 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using NIHR.Infrastructure.Interfaces;
 using Nihr.Hub.Domain.Entities;
 using Nihr.Hub.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Settings;
+using Nihr.Hub.Web.Content;
 using Nihr.Hub.Web.Extensions;
 using Nihr.Hub.Web.Models;
 
@@ -17,6 +19,8 @@ public class HomeController(
     IUserRepository userRepository,
     IOptions<AupSettings> aupOptions,
     IOptions<HubApplicationSettings> hubApplicationOptions,
+    IOptions<BannerSettings> bannerOptions,
+    IContentProvider contentProvider,
     IGoogleAdminService googleAdminService) : Controller
 {
     private readonly ILogger<HomeController> _logger = logger;
@@ -84,13 +88,23 @@ public class HomeController(
                 .ToList();
         }
 
+        var bannerEnabled = bannerOptions.Value.Enabled;
+        string? bannerMessage = null;
+        if (bannerEnabled)
+        {
+            var bannerContent = await contentProvider.GetContentAsync<BannerContent>(ContentIds.Banner, cancellationToken);
+            bannerMessage = bannerContent.Message;
+        }
+
         return View(new HomeModel
         {
             FullName = fullName, GivenName = givenName, Email = email,
             AllApplications = visibleApps
                 .Where(app => !favouriteApps.Contains(app))
                 .ToList(),
-            Favourites = favouriteApps
+            Favourites = favouriteApps,
+            BannerEnabled = bannerEnabled,
+            BannerMessage = bannerMessage
         });
     }
 

@@ -1,0 +1,39 @@
+@model Nihr.Hub.Web.Models.HomeModel
+
+@if (Model.BannerEnabled && !string.IsNullOrWhiteSpace(Model.BannerMessage))
+{
+    <div class="govuk-notification-banner nihr-banner" role="region"
+         aria-labelledby="govuk-notification-banner-title"
+         data-module="govuk-notification-banner"
+         id="nihr-banner">
+        <div class="govuk-notification-banner__header">
+            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                Important
+            </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+            <p class="govuk-body">@Model.BannerMessage</p>
+            <button type="button" class="govuk-button govuk-button--secondary govuk-!-margin-bottom-0"
+                    id="nihr-banner-dismiss" aria-controls="nihr-banner">
+                Dismiss
+            </button>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            var banner = document.getElementById('nihr-banner');
+            if (!banner) return;
+
+            if (sessionStorage.getItem('nihr-banner-dismissed') === 'true') {
+                banner.style.display = 'none';
+                return;
+            }
+
+            document.getElementById('nihr-banner-dismiss').addEventListener('click', function () {
+                banner.style.display = 'none';
+                sessionStorage.setItem('nihr-banner-dismissed', 'true');
+            });
+        }());
+    </script>
+}
