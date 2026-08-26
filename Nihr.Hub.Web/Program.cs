@@ -123,6 +123,10 @@ builder.Services.AddSingleton(sp =>
 
 builder.Services.AddTransient<IGoogleAdminService, GoogleAdminService>();
 
+builder.Services.AddOptions<PoliciesSettings>()
+    .Bind(builder.Configuration.GetSection("Policies"))
+    .ValidateDataAnnotations();
+
 builder.Services.AddTransient<IContentProvider, StaticContentProvider>();
 
 builder.Services.AddHealthChecks();
