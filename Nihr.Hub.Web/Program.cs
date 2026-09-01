@@ -20,38 +20,40 @@ builder.AddNihrConfiguration();
 builder.ConfigureNihrLogging();
 
 builder.Services.AddAuthentication(options =>
-{
-    options.DefaultScheme = "Cookies";
-    options.DefaultChallengeScheme = "Google";
-})
-.AddCookie("Cookies", options =>
-{
-    options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
-}) // Use cookies for session tracking
-.AddGoogle("Google", options =>
-{
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
-                       throw new InvalidOperationException("ClientId is missing");
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ??
-                           throw new InvalidOperationException("ClientSecret is missing");
-
-    options.Events.OnRedirectToAuthorizationEndpoint = context =>
     {
-        context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
-        return Task.CompletedTask;
-    };
-});
+        options.DefaultScheme = "Cookies";
+        options.DefaultChallengeScheme = "Google";
+    })
+    .AddCookie("Cookies",
+        options => { options.Cookie.SecurePolicy = CookieSecurePolicy.Always; }) // Use cookies for session tracking
+    .AddGoogle("Google", options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"] ??
+                           throw new InvalidOperationException("ClientId is missing");
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"] ??
+                               throw new InvalidOperationException("ClientSecret is missing");
 
-if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeAuthentication:Enabled"))
+        options.Events.OnRedirectToAuthorizationEndpoint = context =>
+        {
+            context.Response.Redirect(context.RedirectUri + "&prompt=select_account");
+            return Task.CompletedTask;
+        };
+    });
+
+if (builder.Environment.IsDevelopment() &&
+    builder.Configuration.GetValue<bool>("DevelopmentModeAuthentication:Enabled"))
 {
     builder.Services.AddAuthentication(nameof(DevelopmentModeAuthenticationHandler))
         .AddScheme<DevelopmentModeAuthenticationOptions, DevelopmentModeAuthenticationHandler>(
             nameof(DevelopmentModeAuthenticationHandler),
             options =>
             {
-                options.Name = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Name") ?? string.Empty;
-                options.GivenName = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:GivenName") ?? string.Empty;
-                options.Email = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Email") ?? string.Empty;
+                options.Name = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Name") ??
+                               string.Empty;
+                options.GivenName = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:GivenName") ??
+                                    string.Empty;
+                options.Email = builder.Configuration.GetValue<string>("DevelopmentModeAuthentication:Email") ??
+                                string.Empty;
             }
         );
 }
@@ -78,7 +80,8 @@ builder.Services.AddOptions<GoogleAnalyticsSettings>()
 
 builder.Services.AddTransient<IUserRepository, DynamoDbUserRepository>();
 
-if (builder.Environment.IsDevelopment() && builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
+if (builder.Environment.IsDevelopment() &&
+    builder.Configuration.GetValue<bool>("DevelopmentModeUserRepository:Enabled"))
 {
     builder.Services.AddOptions<DevelopmentModeUserRepositorySettings>()
         .Bind(builder.Configuration.GetSection("DevelopmentModeUserRepository"))
@@ -98,7 +101,6 @@ builder.Services.AddSingleton(sp =>
         .CreateWithUser(adminToImpersonate);
 });
 
-// 2. Register the DirectoryService as a singleton, using the credential
 builder.Services.AddSingleton(sp =>
 {
     var credential = sp.GetRequiredService<GoogleCredential>();
@@ -134,6 +136,11 @@ builder.Services.AddOptions<PoliciesSettings>()
 builder.Services.AddTransient<IContentProvider, StaticContentProvider>();
 
 builder.Services.AddHealthChecks();
+
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Services.AddAntiforgery(o => { o.Cookie.SecurePolicy = CookieSecurePolicy.Always; });
+}
 
 var app = builder.Build();
 

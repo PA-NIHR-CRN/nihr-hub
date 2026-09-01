@@ -2,15 +2,19 @@
 
 @if (Model.BannerEnabled && !string.IsNullOrWhiteSpace(Model.BannerMessage))
 {
-    <div class="govuk-notification-banner nihr-banner" role="region"
-         aria-labelledby="govuk-notification-banner-title">
-        <div class="govuk-notification-banner__header">
-            <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
-                Important
-            </h2>
-        </div>
-        <div class="govuk-notification-banner__content">
-            <p class="govuk-body">@Model.BannerMessage</p>
+    <div class="govuk-grid-row nihr-justify-content-centre">
+        <div class="govuk-grid-column-two-thirds">
+            <div class="govuk-notification-banner nihr-banner" role="region"
+                 aria-labelledby="govuk-notification-banner-title">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Important
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <p class="govuk-body">@Model.BannerMessage</p>
+                </div>
+            </div>
         </div>
     </div>
 }
