@@ -2,6 +2,8 @@ using Google.Apis.Admin.Directory.directory_v1;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Licensing.v1;
 using Google.Apis.Services;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Options;
 using NIHR.Infrastructure.Interfaces;
 using Nihr.Hub.Infrastructure.Interfaces;
@@ -14,7 +16,23 @@ using Nihr.Hub.Web.Content;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+});
+
+builder.Services.AddAntiforgery(options =>
+{
+    options.HeaderName = "RequestVerificationToken";
+    options.Cookie.Name = builder.Environment.IsDevelopment()
+        ? "NIHR-Hub-Antiforgery"
+        : "__Host-NIHR-Hub-Antiforgery";
+    options.Cookie.HttpOnly = true;
+    options.Cookie.SameSite = SameSiteMode.Strict;
+    options.Cookie.SecurePolicy = builder.Environment.IsDevelopment()
+        ? CookieSecurePolicy.SameAsRequest
+        : CookieSecurePolicy.Always;
+});
 
 builder.AddNihrConfiguration();
 builder.ConfigureNihrLogging();
@@ -139,7 +157,14 @@ builder.Services.AddHealthChecks();
 
 if (!builder.Environment.IsDevelopment())
 {
-    builder.Services.AddAntiforgery(o => { o.Cookie.SecurePolicy = CookieSecurePolicy.Always; });
+    builder.Services.Configure<ForwardedHeadersOptions>(options =>
+    {
+        options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+        // ALB addresses are dynamic in ECS; trust forwarded headers at the network boundary.
+        options.KnownNetworks.Clear();
+        options.KnownProxies.Clear();
+    });
 }
 
 var app = builder.Build();
@@ -152,9 +177,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseForwardedHeaders();
 app.UseHttpsRedirection();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();
@@ -167,3 +194,7 @@ app.MapControllerRoute(
 app.MapHealthChecks("/api/health");
 
 app.Run();
+
+public partial class Program
+{
+}

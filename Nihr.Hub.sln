@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nihr.Hub.Infrastructure", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nihr.Hub.Domain", "Nihr.Hub.Domain\Nihr.Hub.Domain.csproj", "{A9CA4E12-AA62-4A41-8E82-B47149E4F3B7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nihr.Hub.Web.Tests", "Nihr.Hub.Web.Tests\Nihr.Hub.Web.Tests.csproj", "{8739B559-EB7F-4E48-BADC-82DCC5484A99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A9CA4E12-AA62-4A41-8E82-B47149E4F3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9CA4E12-AA62-4A41-8E82-B47149E4F3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9CA4E12-AA62-4A41-8E82-B47149E4F3B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8739B559-EB7F-4E48-BADC-82DCC5484A99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8739B559-EB7F-4E48-BADC-82DCC5484A99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8739B559-EB7F-4E48-BADC-82DCC5484A99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8739B559-EB7F-4E48-BADC-82DCC5484A99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
