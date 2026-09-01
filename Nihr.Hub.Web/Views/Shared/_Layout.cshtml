@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.AspNetCore.Antiforgery
 @using Microsoft.Extensions.Options
 @using Nihr.Hub.Infrastructure.Settings
 @inject IOptions<AupSettings> AupOptions
 @inject IOptions<GoogleAnalyticsSettings> GoogleAnalyticsSettings
+@inject IAntiforgery Antiforgery
 
 <!DOCTYPE html>
 <html lang="en" class="nihr">
@@ -31,7 +33,10 @@
         var consentCookie = Context.Request.Cookies["CookieConsent"];
         var analyticsConsent = consentCookie == "true";
         var hasRespondedToBanner = !string.IsNullOrEmpty(consentCookie);
+        var antiforgeryToken = Antiforgery.GetAndStoreTokens(Context).RequestToken;
     }
+
+    <meta name="request-verification-token" content="@antiforgeryToken" />
 
     <!-- Google tag (gtag.js) -->
     <script>
